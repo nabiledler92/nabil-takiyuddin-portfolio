@@ -273,7 +273,7 @@ export const caseStudies: CaseStudy[] = [
     formatLabel: "Individual project",
     metaTitle: "Hive vs Spark SQL Benchmark on Hadoop | Nabil Takiyuddin",
     metaDescription:
-      "Individual project benchmarking Hive and Spark SQL on a Hadoop cluster across TextFile and Parquet formats and internal, external, partitioned and bucketed tables",
+      "Individual project benchmarking Hive and Spark SQL on Hadoop across TextFile and Parquet formats and internal, external, partitioned and bucketed tables.",
     summary:
       "A benchmark of Hive against Spark SQL on a Hadoop cluster, comparing file formats and table configurations on Stack Exchange comments and GDELT event data.",
     highlight: { value: "35,826", label: "Stack Exchange comment records" },
