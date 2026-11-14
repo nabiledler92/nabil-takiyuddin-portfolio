@@ -175,6 +175,10 @@ export const education: Education[] = [
 
 export const certifications: { issuer: string; items: string[] }[] = [
   {
+    issuer: "Microsoft",
+    items: ["Generative AI Engineering Professional Certificate (2026)"],
+  },
+  {
     issuer: "Google",
     items: [
       "Data Analytics Professional Certificate (2021)",
