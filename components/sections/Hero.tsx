@@ -25,10 +25,6 @@ export function Hero() {
               /
             </span>
             <span>Profile NT-01</span>
-            <span aria-hidden="true" className="text-line-strong">
-              /
-            </span>
-            <span>{profile.location.coordinates}</span>
           </p>
 
           <h1

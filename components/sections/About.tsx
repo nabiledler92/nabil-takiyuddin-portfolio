@@ -31,7 +31,6 @@ export function About() {
             <p className="mt-3 text-lg font-medium text-ink">
               {profile.location.locality}, {profile.location.region}, {profile.location.country}
             </p>
-            <p className="mt-1 font-mono text-xs tracking-wider text-dim">{profile.location.coordinates}</p>
           </div>
           <div className="panel p-6">
             <h3 className="label label-cyan">Languages</h3>

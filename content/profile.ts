@@ -12,8 +12,6 @@ export const profile = {
     region: "Selangor",
     country: "Malaysia",
     countryCode: "MY",
-    // Approximate public coordinates of Puchong (town level), used as a HUD detail.
-    coordinates: "3.02°N 101.62°E",
   },
   email: "nabil.takiyuddin92@gmail.com",
   linkedin: "https://www.linkedin.com/in/nabil-takiyuddin-/",
