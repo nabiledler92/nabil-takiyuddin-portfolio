@@ -1,0 +1,109 @@
+/** Technical skills, grouped exactly as in the resume. */
+export type SkillGroup = { id: string; title: string; items: string[] };
+
+export const skillGroups: SkillGroup[] = [
+  {
+    id: "crm",
+    title: "CRM & Marketing Automation",
+    items: [
+      "Salesforce",
+      "Salesforce Account Engagement (Pardot)",
+      "HubSpot (workflows, lead scoring, lifecycle automation)",
+      "Microsoft Dynamics 365",
+      "Demandbase",
+      "Adobe Marketo",
+      "Netcore",
+      "Insycle",
+      "Pipedrive",
+    ],
+  },
+  {
+    id: "analytics",
+    title: "Web Analytics & Tracking",
+    items: [
+      "Google Analytics 4 (GA4)",
+      "Google Tag Manager",
+      "Google Search Console",
+      "Hotjar",
+      "Microsoft Clarity",
+      "Enhanced Ecommerce tracking",
+      "Attribution reporting",
+    ],
+  },
+  {
+    id: "bi",
+    title: "Data Visualization & BI",
+    items: [
+      "Looker Studio (Google Data Studio)",
+      "Tableau",
+      "Microsoft Power BI",
+      "Microsoft Excel",
+      "Google Sheets",
+    ],
+  },
+  {
+    id: "data-eng",
+    title: "Data Engineering",
+    items: [
+      "SQL",
+      "Google BigQuery",
+      "Google Cloud Dataflow",
+      "Google Cloud Dataproc",
+      "Airbyte",
+      "PySpark",
+      "ETL pipelines",
+      "Data warehousing",
+    ],
+  },
+  {
+    id: "ml",
+    title: "Machine Learning & Statistics",
+    items: [
+      "Python (scikit-learn, XGBoost)",
+      "R",
+      "SARIMA forecasting",
+      "SMOTE",
+      "KNIME Analytics",
+      "RapidMiner",
+      "Orange Data Mining",
+    ],
+  },
+  {
+    id: "languages-ai",
+    title: "Languages & AI Tools",
+    items: [
+      "Python",
+      "SQL",
+      "R",
+      "JavaScript",
+      "Streamlit",
+      "Hugging Face (Qwen 2.5 7B)",
+      "Agentic AI tools for workflow and report automation",
+      "Claude",
+    ],
+  },
+  {
+    id: "ads",
+    title: "Digital Advertising & SEO",
+    items: [
+      "Google Ads (incl. Performance Max)",
+      "Facebook Ads",
+      "Instagram Ads",
+      "TikTok Ads",
+      "SEO",
+    ],
+  },
+  {
+    id: "process",
+    title: "Process & Project Tools",
+    items: [
+      "RACI matrices",
+      "SLA frameworks",
+      "QA/QC process design",
+      "Process mapping",
+      "Jira",
+      "ClickUp",
+      "Monday.com",
+    ],
+  },
+];
