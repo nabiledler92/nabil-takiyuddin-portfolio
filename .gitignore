@@ -1,0 +1,17 @@
+# dependencies / build output
+node_modules
+.next
+out
+
+# env files (keep the example)
+.env*
+!.env.example
+
+# Vercel, TypeScript, OS
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+
+# local QA screenshots
+/screenshots
