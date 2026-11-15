@@ -173,31 +173,113 @@ export const education: Education[] = [
   },
 ];
 
-export const certifications: { issuer: string; items: string[] }[] = [
+export type Certification = {
+  name: string;
+  /** Issue date as shown, e.g. "Oct 2026" or "2022". */
+  issued?: string;
+  expires?: string;
+  /** Credential ID from the provider. */
+  credentialId?: string;
+  /** Provider's verification page. */
+  url?: string;
+};
+
+/**
+ * Certifications grouped by issuer. IDs and URLs come from the LinkedIn
+ * "Licenses & certifications" section (checked 2026-11-16).
+ */
+export const certifications: { issuer: string; items: Certification[] }[] = [
   {
     issuer: "Microsoft",
-    items: ["Generative AI Engineering Professional Certificate (2026)"],
+    items: [
+      {
+        name: "Generative AI Engineering Professional Certificate",
+        issued: "Oct 2026",
+        credentialId: "KH7HHTVX9JAB",
+        url: "https://www.coursera.org/account/accomplishments/specialization/KH7HHTVX9JAB",
+      },
+      {
+        name: "MLOps and Responsible AI Practices",
+        issued: "Oct 2026",
+        credentialId: "FI4J5FKV6Y70",
+        url: "https://www.coursera.org/account/accomplishments/records/FI4J5FKV6Y70",
+      },
+    ],
+  },
+  {
+    issuer: "HubSpot Academy",
+    items: [
+      {
+        name: "Sales Hub Software Certified",
+        issued: "Nov 2026",
+        expires: "Dec 2027",
+        credentialId: "8yvyz31y",
+        url: "https://app-na2.hubspot.com/academy/achievements/8yvyz31y/en/1/nabil-takiyuddin/hubspot-sales-hub-software-certified",
+      },
+      {
+        name: "Marketing Hub Software Certified",
+        issued: "Oct 2026",
+        expires: "Nov 2027",
+        credentialId: "kx2gm2y0",
+        url: "https://app-na2.hubspot.com/academy/achievements/kx2gm2y0/en/1/nabil-takiyuddin/hubspot-marketing-hub-software-certified",
+      },
+    ],
   },
   {
     issuer: "Google",
     items: [
-      "Data Analytics Professional Certificate (2021)",
-      "Business Intelligence Professional Certificate (2022)",
-      "Digital Marketing & E-commerce Professional Certificate (2022)",
-      "Building Resilient Streaming Analytics Systems on Google Cloud",
+      {
+        name: "Google AI Professional Certificate",
+        credentialId: "IRBHCXSUIER5",
+        url: "https://www.coursera.org/account/accomplishments/professional-cert/certificate/IRBHCXSUIER5",
+      },
+      {
+        name: "AI for App Deployment",
+        issued: "Oct 2026",
+        credentialId: "ZENA8KO93USE",
+        url: "https://www.coursera.org/account/accomplishments/records/ZENA8KO93USE",
+      },
+      {
+        name: "AI for App Building",
+        issued: "Oct 2026",
+        credentialId: "LEZHB0DGIJXK",
+        url: "https://www.coursera.org/account/accomplishments/records/LEZHB0DGIJXK",
+      },
+      {
+        name: "AI for Data Analysis",
+        issued: "Oct 2026",
+        credentialId: "W7M3K8AUV6UB",
+        url: "https://www.coursera.org/account/accomplishments/records/W7M3K8AUV6UB",
+      },
+      {
+        name: "AI for Content Creation",
+        issued: "Oct 2026",
+        credentialId: "ARISOSS1IXUG",
+        url: "https://www.coursera.org/account/accomplishments/records/ARISOSS1IXUG",
+      },
+      {
+        name: "AI for Writing and Communicating",
+        issued: "Oct 2026",
+        credentialId: "6UWRALI624L0",
+        url: "https://www.coursera.org/account/accomplishments/records/6UWRALI624L0",
+      },
+      { name: "Data Analytics Professional Certificate", issued: "2021" },
+      { name: "Business Intelligence Professional Certificate", issued: "2022" },
+      { name: "Digital Marketing & E-commerce Professional Certificate", issued: "2022" },
+      { name: "Building Resilient Streaming Analytics Systems on Google Cloud" },
     ],
   },
   {
     issuer: "IBM",
-    items: ["Data Engineering Professional Certificate (2022)"],
+    items: [{ name: "Data Engineering Professional Certificate", issued: "2022" }],
   },
   {
     issuer: "Other",
     items: [
-      "Account-Based Go-to-Market (GTM) Certification",
-      "Pipedrive Setup for Admins",
-      "Crash Course on Python",
-      "Claude 101",
+      { name: "Account-Based Go-to-Market (GTM) Certification" },
+      { name: "Pipedrive Setup for Admins" },
+      { name: "Crash Course on Python" },
+      { name: "Claude 101" },
     ],
   },
 ];
