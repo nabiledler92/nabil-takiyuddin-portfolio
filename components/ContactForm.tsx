@@ -7,6 +7,15 @@ type Status = "idle" | "sending" | "sent" | "fallback" | "error";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+/**
+ * Pushes a GTM dataLayer event. No personal data (name, email, message) is ever sent.
+ * Does nothing when GTM is not loaded (local and preview builds).
+ */
+function trackContact(method: "form" | "mailto") {
+  const w = window as Window & { dataLayer?: Record<string, unknown>[] };
+  w.dataLayer?.push({ event: "contact_form_submit", contact_method: method });
+}
+
 function mailtoHref(to: string, name: string, email: string, message: string) {
   const subject = `Portfolio enquiry from ${name || "your website"}`;
   const body = `${message}\n\n${name}${email ? `\n${email}` : ""}`;
@@ -45,6 +54,7 @@ export function ContactForm({ to }: { to: string }) {
       const href = mailtoHref(to, name, email, message);
       setFallbackHref(href);
       setStatus("fallback");
+      trackContact("mailto");
       window.location.href = href;
     };
 
@@ -57,6 +67,7 @@ export function ContactForm({ to }: { to: string }) {
       });
       if (res.ok) {
         setStatus("sent");
+        trackContact("form");
         form.reset();
       } else if (res.status === 400) {
         const json = (await res.json().catch(() => null)) as { errors?: Record<string, string> } | null;

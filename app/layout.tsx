@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { Footer } from "@/components/Footer";
 import { RevealObserver } from "@/components/fx/RevealObserver";
 import { CommandPalette } from "@/components/nav/CommandPalette";
@@ -11,6 +12,9 @@ import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 // Self-hosted variable fonts (SIL Open Font License), so builds never depend on a font CDN.
+/** Google Tag Manager container. Unset locally and on previews so test traffic stays out of reports. */
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+
 const grotesk = localFont({
   src: "./fonts/space-grotesk-latin-wght-normal.woff2",
   weight: "300 700",
@@ -64,7 +68,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Marks JS as available so scroll reveals only hide content when they can also show it. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.dataset.js='1'" }} />
       </head>
+      {GTM_ID ? <GoogleTagManager gtmId={GTM_ID} /> : null}
       <body>
+        {GTM_ID ? (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+              title="Google Tag Manager"
+            />
+          </noscript>
+        ) : null}
         <div className="atmosphere" aria-hidden="true" />
         <HudNav email={profile.email} linkedin={profile.linkedin} />
         <main id="main">{children}</main>
