@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/next";
 import { Footer } from "@/components/Footer";
 import { RevealObserver } from "@/components/fx/RevealObserver";
 import { CommandPalette } from "@/components/nav/CommandPalette";
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <CommandPalette cases={paletteCases} email={profile.email} linkedin={profile.linkedin} />
         <RevealObserver />
+        <Analytics />
       </body>
     </html>
   );
