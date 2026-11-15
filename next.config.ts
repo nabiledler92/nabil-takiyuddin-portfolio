@@ -14,14 +14,17 @@ const isDev = process.env.NODE_ENV === "development";
 const GTM = "https://www.googletagmanager.com";
 const GTM_PREVIEW = "https://tagmanager.google.com";
 const GA = "https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net";
+// Microsoft Clarity (loaded through GTM): tag loader on www.clarity.ms, script on scripts.clarity.ms,
+// data collection on *.clarity.ms, and c.bing.com for Clarity's cookie sync.
+const CLARITY = "https://*.clarity.ms https://c.bing.com";
 
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' ${GTM} ${GTM_PREVIEW}${isDev ? " 'unsafe-eval' https://va.vercel-scripts.com" : ""}`,
+  `script-src 'self' 'unsafe-inline' ${GTM} ${GTM_PREVIEW} ${CLARITY}${isDev ? " 'unsafe-eval' https://va.vercel-scripts.com" : ""}`,
   `style-src 'self' 'unsafe-inline' ${GTM_PREVIEW} https://fonts.googleapis.com`,
-  `img-src 'self' data: blob: ${GTM} ${GA} https://ssl.gstatic.com https://www.gstatic.com`,
+  `img-src 'self' data: blob: ${GTM} ${GA} ${CLARITY} https://ssl.gstatic.com https://www.gstatic.com`,
   "font-src 'self' https://fonts.gstatic.com",
-  `connect-src 'self' ${GTM} ${GA}`,
+  `connect-src 'self' ${GTM} ${GA} ${CLARITY}`,
   `frame-src ${GTM}`,
   "manifest-src 'self'",
   "object-src 'none'",
