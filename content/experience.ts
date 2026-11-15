@@ -92,7 +92,17 @@ export const experience: Role[] = [
       "Analyzed customer journey processes across APAC markets and redesigned workflows to improve conversion rates and user experience metrics.",
       "Gathered requirements with Experience Designers, IT developers, and regional business units, and designed tracking for Single Page Applications.",
     ],
-    stack: ["Google Tag Manager", "GA4", "PySpark", "Airbyte", "ETL"],
+    notes: [
+      {
+        label: "Reporting",
+        items: ["Performance overview dashboard", "Conversion funnel dashboard"],
+      },
+      {
+        label: "Documentation",
+        items: ["Implementation frameworks and tracking documentation kept in Confluence"],
+      },
+    ],
+    stack: ["Google Tag Manager", "GA4", "PySpark", "Airbyte", "ETL", "Confluence"],
   },
   {
     id: "aswhite",
@@ -110,7 +120,37 @@ export const experience: Role[] = [
       "Wrote SQL in Google BigQuery (views, stored procedures) and maintained the BigQuery data warehouse.",
       "Created and maintained Google Tag Manager tags to keep website and campaign tracking accurate and consistent.",
     ],
-    stack: ["Looker Studio", "Tableau", "BigQuery", "Dataflow", "Dataproc", "Airbyte", "GA4"],
+    notes: [
+      {
+        label: "Data architecture",
+        items: [
+          "Mapped the marketing department's data architecture, from source platforms to reporting",
+          "Defined data granularity for reporting tables",
+          "Airbyte extract-and-load pipelines into Google Cloud",
+          "BigQuery SQL on nested (array) GA4 and Google Ads data",
+        ],
+      },
+      {
+        label: "Planning and reporting",
+        items: [
+          "KPI forecasts projecting campaign performance and target achievement",
+          "Full-funnel key-metrics framework, from awareness (CPM, CPC) to loyalty (LTV, AOV, retention)",
+          "Digital campaign and web strategy reporting for Cleanaway Australia",
+          "Projects run in ClickUp; documentation kept in Confluence",
+        ],
+      },
+    ],
+    stack: [
+      "Looker Studio",
+      "Tableau",
+      "BigQuery",
+      "Dataflow",
+      "Dataproc",
+      "Airbyte",
+      "GA4",
+      "ClickUp",
+      "Confluence",
+    ],
   },
   {
     id: "doctoroncall",
@@ -127,7 +167,51 @@ export const experience: Role[] = [
       "Implemented Google Tag Manager conversion events for web and app, including Enhanced Ecommerce events, working with developers on backend tracking.",
       "Managed Google Ads and Facebook Ads campaigns, optimizing ROAS above 10x, and integrated Hotjar and Netcore (including personalization) for web analysis.",
     ],
-    stack: ["GA4", "Google Tag Manager", "Google Ads", "Facebook Ads", "Hotjar", "Netcore"],
+    notes: [
+      {
+        label: "GA4 reporting",
+        items: [
+          "Standard, custom and funnel reports, including custom metrics",
+          "Tracking troubleshooting",
+          "Connected other platforms to GA4",
+        ],
+      },
+      {
+        label: "Google Tag Manager",
+        items: [
+          "Custom tags for business goals, social media pixels and 3rd-party tools",
+          "Custom triggers (clicks, page paths, social) and variables (dataLayer, JavaScript)",
+          "Ecommerce events from view_item to purchase, with event and item parameters",
+          "Standard (gtag.js) and custom dataLayer, e.g. a sign-up event",
+        ],
+      },
+      {
+        label: "Dashboards",
+        items: [
+          "Looker Studio dashboards for campaign and webpage performance",
+          "Holistics data modelling and custom business reports",
+        ],
+      },
+      {
+        label: "Customer behaviour",
+        items: [
+          "GA4 traffic, Hotjar and Microsoft Clarity heatmaps and session recordings",
+          "CSAT and NPS surveys",
+          "Netcore user journeys, transactional email, web notifications and nudges",
+        ],
+      },
+    ],
+    stack: [
+      "GA4",
+      "Google Tag Manager",
+      "Google Ads",
+      "Facebook Ads",
+      "Looker Studio",
+      "Holistics",
+      "Hotjar",
+      "Microsoft Clarity",
+      "Netcore",
+    ],
   },
   {
     id: "pdc",
