@@ -26,7 +26,7 @@ Other scripts:
 
 | Variable | Required | Purpose |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | No | Public URL with no trailing slash. Used for canonical URLs, sitemap, robots, Open Graph, JSON-LD and `llms.txt`. Defaults to `https://nabil-takiyuddin.vercel.app`. |
+| `NEXT_PUBLIC_SITE_URL` | No | Public URL with no trailing slash. Used for canonical URLs, sitemap, robots, Open Graph, JSON-LD and `llms.txt`. Defaults to `https://nabil-takiyuddin.dev`. |
 | `RESEND_API_KEY` | No | [Resend](https://resend.com) API key for the contact form. |
 | `CONTACT_TO_EMAIL` | No | Inbox that receives contact-form messages. |
 | `CONTACT_FROM_EMAIL` | No | Verified Resend sender, e.g. `Portfolio <hello@yourdomain.com>`. Defaults to `Portfolio <onboarding@resend.dev>`, which only delivers to the Resend account owner's address. |
@@ -120,9 +120,9 @@ Use your **personal** GitHub (`nabiledler92`) and **personal** Vercel account, n
    git push -u origin main
    ```
 3. Sign in to [vercel.com](https://vercel.com) with the personal account and check the account switcher (top left) shows your personal scope.
-4. Add New → Project → import `nabiledler92/portfolio`. Vercel detects Next.js; keep the defaults.
+4. Add New → Project → import `nabiledler92/nabil-takiyuddin-portfolio`. Vercel detects Next.js; keep the defaults.
 5. Add the environment variables from the table above (Production and Preview). Set `NEXT_PUBLIC_SITE_URL` to the final address.
-6. Deploy. To get `nabil-takiyuddin.vercel.app`, set the project name to `nabil-takiyuddin`, or add that domain under Project → Settings → Domains.
+6. Deploy. The custom domain `nabil-takiyuddin.dev` is set as the primary domain under Project → Settings → Domains; the `.vercel.app` addresses redirect to it.
 7. After changing `NEXT_PUBLIC_SITE_URL` or adding a custom domain, redeploy so the sitemap, canonical URLs and `llms.txt` pick it up.
 
 After launch: add the site to Google Search Console and Bing Webmaster Tools and submit `/sitemap.xml`.

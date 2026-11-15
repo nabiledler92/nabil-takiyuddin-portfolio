@@ -1,6 +1,6 @@
 /** Site-wide constants. The public URL comes from NEXT_PUBLIC_SITE_URL. */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://nabil-takiyuddin.vercel.app"
+  process.env.NEXT_PUBLIC_SITE_URL || "https://nabil-takiyuddin.dev"
 ).replace(/\/+$/, "");
 
 export const SITE_NAME = "Nabil Takiyuddin";
