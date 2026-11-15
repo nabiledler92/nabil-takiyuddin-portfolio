@@ -7,13 +7,22 @@ const isDev = process.env.NODE_ENV === "development";
 // 'unsafe-eval' is only needed by the dev server.
 // Vercel Analytics is served from the same origin (/_vercel/insights) in production;
 // in development it loads a debug script from va.vercel-scripts.com.
+//
+// Google Tag Manager + GA4 (including Google Signals and GTM Preview / Tag Assistant).
+// Any tag added in GTM later (Clarity, LinkedIn Insight, Meta Pixel, Hotjar, ...) needs its
+// domains added here as well, or it will be blocked silently.
+const GTM = "https://www.googletagmanager.com";
+const GTM_PREVIEW = "https://tagmanager.google.com";
+const GA = "https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net";
+
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval' https://va.vercel-scripts.com" : ""}`,
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
-  "font-src 'self'",
-  "connect-src 'self'",
+  `script-src 'self' 'unsafe-inline' ${GTM} ${GTM_PREVIEW}${isDev ? " 'unsafe-eval' https://va.vercel-scripts.com" : ""}`,
+  `style-src 'self' 'unsafe-inline' ${GTM_PREVIEW} https://fonts.googleapis.com`,
+  `img-src 'self' data: blob: ${GTM} ${GA} https://ssl.gstatic.com https://www.gstatic.com`,
+  "font-src 'self' https://fonts.gstatic.com",
+  `connect-src 'self' ${GTM} ${GA}`,
+  `frame-src ${GTM}`,
   "manifest-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",

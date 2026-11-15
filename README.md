@@ -27,6 +27,7 @@ Other scripts:
 | Variable | Required | Purpose |
 | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | No | Public URL with no trailing slash. Used for canonical URLs, sitemap, robots, Open Graph, JSON-LD and `llms.txt`. Defaults to `https://nabil-takiyuddin.dev`. |
+| `NEXT_PUBLIC_GTM_ID` | No | Google Tag Manager container ID (e.g. `GTM-XXXXXXX`). Set on Production only. When unset, GTM is not loaded. Tags added in GTM need their domains allowed in the CSP in `next.config.ts`. |
 | `RESEND_API_KEY` | No | [Resend](https://resend.com) API key for the contact form. |
 | `CONTACT_TO_EMAIL` | No | Inbox that receives contact-form messages. |
 | `CONTACT_FROM_EMAIL` | No | Verified Resend sender, e.g. `Portfolio <hello@yourdomain.com>`. Defaults to `Portfolio <onboarding@resend.dev>`, which only delivers to the Resend account owner's address. |
