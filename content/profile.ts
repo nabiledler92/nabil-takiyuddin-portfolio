@@ -226,6 +226,31 @@ export const certifications: { issuer: string; items: Certification[] }[] = [
     ],
   },
   {
+    issuer: "Salesforce",
+    items: [{ name: "Certified Marketing Cloud Account Engagement Specialist" }],
+  },
+  {
+    issuer: "Demandbase",
+    items: [
+      {
+        name: "Digital Marketing Manager",
+        issued: "Jun 2026",
+        expires: "Jun 2028",
+        url: "https://www.credly.com/badges/277eb138-33a3-440d-90c9-474918d615fb",
+      },
+      {
+        name: "Marketing Operations / IT Administrator",
+        issued: "Jun 2026",
+        url: "https://www.credly.com/badges/d89e5654-5351-45c9-baf5-6a4a56a131ba",
+      },
+      {
+        name: "Digital Advertising Manager",
+        issued: "May 2026",
+        url: "https://www.credly.com/badges/05858d85-4ce5-41ab-a3b3-a066ecd5ffff",
+      },
+    ],
+  },
+  {
     issuer: "Google",
     items: [
       {
@@ -263,9 +288,17 @@ export const certifications: { issuer: string; items: Certification[] }[] = [
         credentialId: "6UWRALI624L0",
         url: "https://www.coursera.org/account/accomplishments/records/6UWRALI624L0",
       },
-      { name: "Data Analytics Professional Certificate", issued: "2021" },
+      {
+        name: "Data Analytics Professional Certificate",
+        issued: "2021",
+        url: "https://www.credly.com/badges/06730556-d9d1-4558-b185-ad3a9cb7dc88",
+      },
       { name: "Business Intelligence Professional Certificate", issued: "2022" },
-      { name: "Digital Marketing & E-commerce Professional Certificate", issued: "2022" },
+      {
+        name: "Digital Marketing & E-commerce Professional Certificate",
+        issued: "2022",
+        url: "https://www.credly.com/badges/4d080b64-d4fe-4d3e-89da-8b26856bf380",
+      },
       { name: "Building Resilient Streaming Analytics Systems on Google Cloud" },
     ],
   },
