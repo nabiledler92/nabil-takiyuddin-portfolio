@@ -84,8 +84,8 @@ export function ContactForm({ to }: { to: string }) {
   }
 
   const field =
-    "mt-2 w-full rounded-lg border border-line-strong bg-void/60 px-3.5 py-3 text-base text-ink placeholder:text-dim transition-colors focus:border-cyan focus:outline-none focus:ring-2 focus:ring-cyan/30 aria-[invalid=true]:border-[#ff8e8e]";
-  const errorText = "mt-1.5 text-sm text-[#ffb0b0]";
+    "mt-2 w-full rounded-lg border border-line-strong bg-void/60 px-3.5 py-3 text-base text-ink placeholder:text-dim transition-colors focus:border-cyan focus:outline-none focus:ring-2 focus:ring-cyan/30 aria-[invalid=true]:border-danger-line";
+  const errorText = "mt-1.5 text-sm text-danger";
 
   return (
     <form onSubmit={onSubmit} noValidate className="space-y-5" aria-describedby="contact-status">
