@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowUpRight } from "@/components/Icons";
 import { ProjectsGrid } from "@/components/ProjectsGrid";
 import { Section, SectionHeading } from "@/components/SectionHeading";
 import { certifications, education } from "@/content/profile";
@@ -113,12 +114,41 @@ export function EducationSection() {
                   <span aria-hidden="true" className="h-px flex-1 bg-line" />
                 </h4>
                 <ul className="mt-3 space-y-2">
-                  {c.items.map((it) => (
-                    <li key={it} className="relative pl-5 text-[0.9375rem] leading-relaxed text-soft">
-                      <span aria-hidden="true" className="absolute top-[0.55em] left-0 size-1.5 rotate-45 border border-cyan" />
-                      {it}
-                    </li>
-                  ))}
+                  {c.items.map((it) => {
+                    const meta = [
+                      it.issued ? `Issued ${it.issued}` : "",
+                      it.expires ? `expires ${it.expires}` : "",
+                      it.credentialId ? `ID ${it.credentialId}` : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" · ");
+                    return (
+                      <li key={it.name} className="relative pl-5 text-[0.9375rem] leading-relaxed text-soft">
+                        <span
+                          aria-hidden="true"
+                          className="absolute top-[0.55em] left-0 size-1.5 rotate-45 border border-cyan"
+                        />
+                        {it.url ? (
+                          <a
+                            href={it.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group inline-flex items-baseline gap-1 text-ink underline decoration-line underline-offset-4 transition-colors hover:text-cyan hover:decoration-cyan"
+                          >
+                            {it.name}
+                            <ArrowUpRight
+                              aria-hidden="true"
+                              className="size-3.5 shrink-0 self-center transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                            />
+                            <span className="sr-only">(verify credential, opens in a new tab)</span>
+                          </a>
+                        ) : (
+                          it.name
+                        )}
+                        {meta ? <span className="mt-0.5 block font-mono text-xs text-muted">{meta}</span> : null}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}

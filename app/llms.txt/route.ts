@@ -35,7 +35,14 @@ export function GET() {
     "",
     "## Certifications",
     "",
-    ...certifications.flatMap((c) => c.items.map((i) => `- ${c.issuer === "Other" ? "" : `${c.issuer}: `}${i}`)),
+    ...certifications.flatMap((c) =>
+      c.items.map((i) => {
+        const prefix = c.issuer === "Other" ? "" : `${c.issuer}: `;
+        const name = i.url ? `[${i.name}](${i.url})` : i.name;
+        const meta = [i.issued, i.credentialId ? `credential ID ${i.credentialId}` : ""].filter(Boolean).join(", ");
+        return `- ${prefix}${name}${meta ? ` (${meta})` : ""}`;
+      }),
+    ),
     "",
     "## Featured case studies",
     "",
