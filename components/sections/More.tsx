@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "@/components/Icons";
+import { badges, credlyProfileUrl } from "@/content/badges";
 import { ProjectsGrid } from "@/components/ProjectsGrid";
 import { Section, SectionHeading } from "@/components/SectionHeading";
 import { certifications, education } from "@/content/profile";
@@ -106,7 +108,45 @@ export function EducationSection() {
 
         <div className="panel self-start p-6 sm:p-7" data-reveal style={{ "--d": "120ms" } as React.CSSProperties}>
           <h3 className="label label-cyan">Certifications</h3>
-          <div className="mt-5 space-y-6">
+          <ul className="mt-5 flex flex-wrap items-center gap-3" aria-label="Credential badges">
+            {badges.map((b) => {
+              const img = (
+                <Image
+                  src={b.image}
+                  alt={`${b.issuer}: ${b.name} badge`}
+                  sizes="128px"
+                  className="h-16 w-auto object-contain"
+                />
+              );
+              return (
+                <li key={b.name} title={b.name}>
+                  {b.url ? (
+                    <a
+                      href={b.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block rounded-lg transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-cyan"
+                    >
+                      {img}
+                      <span className="sr-only">(verify credential, opens in a new tab)</span>
+                    </a>
+                  ) : (
+                    img
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+          <a
+            href={credlyProfileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-1 font-mono text-xs text-muted underline decoration-line underline-offset-4 hover:text-cyan"
+          >
+            All badges on Credly
+            <ArrowUpRight aria-hidden="true" className="size-3" />
+          </a>
+          <div className="mt-6 space-y-6">
             {certifications.map((c) => (
               <div key={c.issuer}>
                 <h4 className="flex items-center gap-3 text-lg font-semibold text-ink">
