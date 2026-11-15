@@ -9,6 +9,7 @@ import { HudNav } from "@/components/nav/HudNav";
 import { profile } from "@/content/profile";
 import { caseStudies } from "@/content/projects";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { THEME_COLOR, THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
 // Self-hosted variable fonts (SIL Open Font License), so builds never depend on a font CDN.
@@ -48,8 +49,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#04080f",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: THEME_COLOR.light },
+    { media: "(prefers-color-scheme: dark)", color: THEME_COLOR.dark },
+  ],
+  colorScheme: "dark light",
   width: "device-width",
   initialScale: 1,
 };
@@ -65,8 +69,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${grotesk.variable} ${jetbrains.variable}`} suppressHydrationWarning>
       <head>
-        {/* Marks JS as available so scroll reveals only hide content when they can also show it. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.dataset.js='1'" }} />
+        {/* Before first paint: marks JS as available (scroll reveals only hide content when they can also
+            show it) and applies the saved Light / Dark / System theme so the page never flashes. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       {GTM_ID ? <GoogleTagManager gtmId={GTM_ID} /> : null}
       <body>

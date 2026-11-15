@@ -3,7 +3,9 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { CopyIcon, FileIcon, HashIcon, LinkedInIcon, MailIcon, SearchIcon } from "@/components/Icons";
+import { themeOptions, useThemePref } from "@/components/nav/ThemeSwitcher";
 import { OPEN_PALETTE_EVENT, sections } from "@/lib/nav";
+import { setThemePref, type ThemePref } from "@/lib/theme";
 import { goToSection } from "@/lib/scroll";
 
 export type PaletteCase = { slug: string; code: string; title: string; course: string };
@@ -13,11 +15,12 @@ type Action =
   | { kind: "case"; slug: string }
   | { kind: "copy" }
   | { kind: "email" }
-  | { kind: "linkedin" };
+  | { kind: "linkedin" }
+  | { kind: "theme"; pref: ThemePref };
 
 type Item = {
   id: string;
-  group: "Navigate" | "Case studies" | "Actions";
+  group: "Navigate" | "Case studies" | "Actions" | "Theme";
   label: string;
   hint?: string;
   keywords: string;
@@ -43,6 +46,7 @@ export function CommandPalette({
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
   const [copied, setCopied] = useState(false);
+  const themePref = useThemePref();
 
   const close = useCallback(() => dialogRef.current?.close(), []);
 
@@ -103,8 +107,17 @@ export function CommandPalette({
         icon: <LinkedInIcon />,
         action: { kind: "linkedin" },
       },
+      ...themeOptions.map<Item>(({ value, label, Icon }) => ({
+        id: `theme-${value}`,
+        group: "Theme",
+        label: value === "system" ? "Use system theme" : `Switch to ${label.toLowerCase()} theme`,
+        hint: themePref === value ? "current" : undefined,
+        keywords: `theme appearance mode colour color ${value === "light" ? "bright day" : value === "dark" ? "night" : "auto os device"}`,
+        icon: <Icon />,
+        action: { kind: "theme", pref: value },
+      })),
     ],
-    [cases, email],
+    [cases, email, themePref],
   );
 
   const filtered = useMemo(() => {
@@ -134,7 +147,9 @@ export function CommandPalette({
       return;
     }
     close();
-    if (a.kind === "section") {
+    if (a.kind === "theme") {
+      setThemePref(a.pref);
+    } else if (a.kind === "section") {
       if (pathname === "/" && goToSection(a.id)) return;
       router.push(a.id === "top" ? "/" : `/#${a.id}`);
     } else if (a.kind === "case") {

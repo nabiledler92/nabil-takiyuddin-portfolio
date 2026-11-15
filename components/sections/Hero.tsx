@@ -88,7 +88,7 @@ export function Hero() {
               <path d="M22 60V22h38M340 22h38v38M378 340v38h-38M60 378H22v-38" strokeWidth="1" opacity="0.55" />
             </svg>
 
-            <div className="absolute inset-[10.5%] overflow-hidden rounded-full border border-line-strong bg-hull shadow-[0_0_0_6px_rgba(4,8,15,0.9),0_0_70px_-10px_rgba(79,227,255,0.55)]">
+            <div className="absolute inset-[10.5%] overflow-hidden rounded-full border border-line-strong bg-hull shadow-[0_0_0_6px_color-mix(in_oklab,var(--color-void)_90%,transparent),0_0_70px_-10px_rgba(79,227,255,0.55)]">
               <Image
                 src={photo}
                 alt="Portrait of Nabil Takiyuddin, smiling with arms crossed, wearing glasses and a navy quarter-zip sweater"

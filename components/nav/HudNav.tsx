@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { LinkedInIcon, MailIcon, Monogram, SearchIcon } from "@/components/Icons";
+import { ThemeSwitcher } from "@/components/nav/ThemeSwitcher";
 import { OPEN_PALETTE_EVENT, sections, topNav } from "@/lib/nav";
 import { goToSection } from "@/lib/scroll";
 
@@ -139,7 +140,7 @@ export function HudNav({ email, linkedin }: { email: string; linkedin: string })
       </a>
 
       <header className="no-print fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
-        <div className="glass relative mx-auto flex h-14 max-w-[1180px] items-center gap-3 overflow-hidden rounded-2xl border border-line pr-2 pl-3 shadow-[0_16px_50px_-24px_rgba(0,0,0,0.95)]">
+        <div className="glass relative mx-auto flex h-14 max-w-[1180px] items-center gap-3 overflow-hidden rounded-2xl border border-line pr-2 pl-3 shadow-[0_16px_50px_-24px_var(--shadow-tint)]">
           <Link
             href="/"
             onClick={(e) => onSectionClick(e, "top")}
@@ -196,6 +197,7 @@ export function HudNav({ email, linkedin }: { email: string; linkedin: string })
               </span>
               %
             </span>
+            <ThemeSwitcher compact className="hidden sm:flex" />
             <button
               type="button"
               onClick={openPalette}
@@ -293,11 +295,11 @@ export function HudNav({ email, linkedin }: { email: string; linkedin: string })
         <div className="relative flex min-h-full flex-col px-5 pt-3 pb-8">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_26rem_at_100%_0%,rgba(34,110,190,0.38),transparent_65%),radial-gradient(30rem_24rem_at_0%_100%,rgba(104,84,220,0.22),transparent_65%)]"
+            className="menu-glow pointer-events-none absolute inset-0"
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 [background-image:linear-gradient(rgba(125,211,252,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(125,211,252,0.06)_1px,transparent_1px)] [background-size:48px_48px] [mask-image:linear-gradient(180deg,#000,transparent_85%)]"
+            className="menu-grid pointer-events-none absolute inset-0"
           />
           <div className="relative flex h-14 items-center justify-between">
             <span className="flex items-center gap-2.5">
@@ -373,6 +375,10 @@ export function HudNav({ email, linkedin }: { email: string; linkedin: string })
               <a className="btn btn-ghost" href={linkedin} target="_blank" rel="noopener noreferrer">
                 <LinkedInIcon /> LinkedIn
               </a>
+            </div>
+            <div className="mt-4">
+              <p className="label mb-2">Theme</p>
+              <ThemeSwitcher />
             </div>
           </div>
         </div>

@@ -28,6 +28,25 @@ export default function NetworkField() {
     const pointer = { x: -9999, y: -9999, active: false };
     const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     const LINK = 150;
+    // Light cyan reads well on the dark sky; on the light theme the same marks use deeper blues.
+    const palettes = {
+      dark: {
+        link: "110, 215, 255",
+        pointer: "163, 148, 255",
+        hub: "rgba(125, 240, 255, 0.95)",
+        node: "rgba(150, 215, 255, 0.6)",
+        ring: "rgba(79, 227, 255, 0.22)",
+        packet: "rgba(46, 230, 197, 0.95)",
+      },
+      light: {
+        link: "20, 110, 170",
+        pointer: "91, 71, 214",
+        hub: "rgba(1, 111, 153, 0.9)",
+        node: "rgba(30, 100, 160, 0.5)",
+        ring: "rgba(1, 111, 153, 0.25)",
+        packet: "rgba(8, 122, 102, 0.95)",
+      },
+    };
 
     const seed = () => {
       const count = Math.max(22, Math.min(64, Math.round((width * height) / 21000)));
@@ -60,6 +79,7 @@ export default function NetworkField() {
       last = now;
 
       ctx.clearRect(0, 0, width, height);
+      const c = document.documentElement.dataset.theme === "light" ? palettes.light : palettes.dark;
 
       for (const n of nodes) {
         n.x += n.vx * dt;
@@ -92,7 +112,7 @@ export default function NetworkField() {
           const d2 = dx * dx + dy * dy;
           if (d2 > LINK * LINK) continue;
           const alpha = (1 - Math.sqrt(d2) / LINK) * 0.42;
-          ctx.strokeStyle = `rgba(110, 215, 255, ${alpha.toFixed(3)})`;
+          ctx.strokeStyle = `rgba(${c.link}, ${alpha.toFixed(3)})`;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
@@ -104,7 +124,7 @@ export default function NetworkField() {
           const dy = a.y - pointer.y;
           const d = Math.hypot(dx, dy);
           if (d < 190) {
-            ctx.strokeStyle = `rgba(163, 148, 255, ${((1 - d / 190) * 0.55).toFixed(3)})`;
+            ctx.strokeStyle = `rgba(${c.pointer}, ${((1 - d / 190) * 0.55).toFixed(3)})`;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(pointer.x, pointer.y);
@@ -114,12 +134,12 @@ export default function NetworkField() {
       }
 
       for (const n of nodes) {
-        ctx.fillStyle = n.hub ? "rgba(125, 240, 255, 0.95)" : "rgba(150, 215, 255, 0.6)";
+        ctx.fillStyle = n.hub ? c.hub : c.node;
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
         ctx.fill();
         if (n.hub) {
-          ctx.strokeStyle = "rgba(79, 227, 255, 0.22)";
+          ctx.strokeStyle = c.ring;
           ctx.beginPath();
           ctx.arc(n.x, n.y, 7, 0, Math.PI * 2);
           ctx.stroke();
@@ -138,7 +158,7 @@ export default function NetworkField() {
         if (p.t >= 1 || !a || !b || Math.hypot(a.x - b.x, a.y - b.y) > LINK) return false;
         const x = a.x + (b.x - a.x) * p.t;
         const y = a.y + (b.y - a.y) * p.t;
-        ctx.fillStyle = "rgba(46, 230, 197, 0.95)";
+        ctx.fillStyle = c.packet;
         ctx.beginPath();
         ctx.arc(x, y, 1.9, 0, Math.PI * 2);
         ctx.fill();
