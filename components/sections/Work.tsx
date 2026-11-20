@@ -11,7 +11,7 @@ export function Work() {
         index="04"
         code="Case studies"
         title="Featured case studies."
-        lede="Five projects from the Master of Data Science at UiTM and one competition build, written up as problem, approach, results, tools and team."
+        lede="Five projects from the Master of Data Science at UiTM and two competition builds, written up as problem, approach, results, tools and team."
       />
 
       <ol className="grid gap-4 lg:grid-cols-6">
