@@ -452,6 +452,81 @@ export const caseStudies: CaseStudy[] = [
       "Cloud Run",
     ],
   },
+  {
+    slug: "sirr-male-fertility",
+    code: "CS-07",
+    title: "Sirr: A Private, Bilingual First Step into Male Fertility Care",
+    shortTitle: "Sirr male fertility care prototype",
+    schemaType: "CreativeWork",
+    course: { code: "Future Health Challenge 2026", name: "Challenge 01, Male Reproductive Health" },
+    format: "Group",
+    formatLabel: "Hackathon entry, team lead",
+    date: "November 2026",
+    context: { label: "Event", value: "Future Health Digital Innovation Challenge 2026" },
+    links: [{ label: "Live demo", href: "https://sirr-demo.jollytree-ef416752.eastus2.azurecontainerapps.io/" }],
+    metaTitle: "Sirr Male Fertility Care Prototype | Nabil Takiyuddin",
+    metaDescription:
+      "Hackathon entry: an English/Arabic web prototype giving men a private first step into fertility care, from check-in to a clinician-approved report.",
+    summary:
+      "An English/Arabic web prototype that gives men a private way to understand fertility concerns, complete an assessment when suitable and receive a clinician-reviewed report, built for the Future Health Digital Innovation Challenge.",
+    highlight: { value: "4", label: "roles in one care workflow" },
+    problem: [
+      "Male fertility concerns often go unspoken. Men need a private, culturally trusted way to understand what is going on and reach the right assessment, without the first step feeling like a clinic visit.",
+      "The challenge (Challenge 01, Male Reproductive Health) asked how to identify male reproductive health risks earlier, reduce barriers to assessment and connect men to appropriate care before infertility is diagnosed.",
+    ],
+    approach: [
+      {
+        title: "Private check-in",
+        text: "A five-question check-in routes each man to an explained next step. Defined urgent answers bypass booking. It gives no diagnosis and no risk score.",
+      },
+      {
+        title: "Learn and Ask Sirr",
+        text: "Visual and short video guides, plus Ask Sirr: scripted educational replies with source links (MedlinePlus, NICHD, NHS, WHO). No LLM, and the chat is not stored.",
+      },
+      {
+        title: "Care workflow",
+        text: "Patient, courier, laboratory and clinician views share one assessment journey with sample tracking. A report is held until a clinician approves it.",
+      },
+      {
+        title: "Bilingual and deployed",
+        text: "English and Arabic with right-to-left layout on mobile and desktop, served from Azure Container Apps that scale to zero when idle, with versioned revisions for instant rollback.",
+      },
+    ],
+    results: {
+      metrics: [
+        { value: "4", label: "Workflow roles", note: "Patient, courier, lab, clinician" },
+        { value: "2", label: "Languages", note: "English and Arabic (RTL)" },
+        { value: "5", label: "Check-in questions", note: "With explained routing" },
+        { value: "3", label: "Test suites passing", note: "Automated scenario tests" },
+      ],
+      notes: [
+        "All three scenario suites pass, covering urgent bypass, invalid handoffs, pending-report protection, bilingual replies and chat non-persistence.",
+        "The prototype uses synthetic data only: no database, no real sign-in and no AI model. Reviewers choose \"Continue with demo patient\" with no account needed.",
+        "The proposed next step is a feasibility pilot with about 30 consenting adults at one site, once clinic, laboratory and courier partners, Arabic review and a secure backend are in place.",
+      ],
+    },
+    tools: [
+      "JavaScript",
+      "HTML/CSS",
+      "Azure Container Apps",
+      "Azure Container Registry",
+      "nginx",
+      "Docker",
+    ],
+    role: "Team lead for Team Excelsoir, Malaysia. Built the prototype and deployed it on Microsoft Azure.",
+    team: ["Nabil Takiyuddin", "Syarmine", "Khairulanwar", "Muntaha", "Syamil"],
+    tags: ["Data Engineering"],
+    keywords: [
+      "male fertility",
+      "male reproductive health",
+      "digital health",
+      "Arabic RTL",
+      "care workflow",
+      "Azure Container Apps",
+      "Future Health Digital Innovation Challenge",
+      "hackathon",
+    ],
+  },
 ];
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {
