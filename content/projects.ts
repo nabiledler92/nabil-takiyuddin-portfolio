@@ -1,5 +1,5 @@
 /**
- * Projects from the Master of Data Science (UiTM).
+ * Projects from the Master of Data Science (UiTM), plus competition work.
  *
  * To add a case study: append an object to `caseStudies`. A page is generated at
  * /projects/<slug> and it is added to the home page, sitemap, llms.txt and command palette.
@@ -40,9 +40,19 @@ export type CaseStudy = {
   role: string;
   team?: string[];
   supervisor?: string;
+  /** Where the work was done. Defaults to the Master of Data Science at UiTM. */
+  context?: { label: string; value: string };
+  /** External links shown under the page intro, e.g. the source code. */
+  links?: { label: string; href: string }[];
   tags: ProjectTag[];
   keywords: string[];
 };
+
+const DEFAULT_CONTEXT = { label: "Programme", value: "Master of Data Science, UiTM" };
+
+export function caseContext(cs: CaseStudy): { label: string; value: string } {
+  return cs.context ?? DEFAULT_CONTEXT;
+}
 
 export const caseStudies: CaseStudy[] = [
   {
@@ -362,6 +372,84 @@ export const caseStudies: CaseStudy[] = [
       "routing",
       "metaheuristics",
       "nature-inspired computing",
+    ],
+  },
+  {
+    slug: "myflood",
+    code: "CS-06",
+    title: "MyFlood: Flood Depth and Loss Estimates for Malaysian Small Businesses, with a Gemini Assistant",
+    shortTitle: "MyFlood flood risk platform",
+    schemaType: "CreativeWork",
+    course: { code: "AI Builder Cup 2026", name: "Competition entry" },
+    format: "Group",
+    formatLabel: "Competition entry, team lead",
+    date: "October 2026",
+    context: { label: "Event", value: "AI Builder Cup 2026" },
+    links: [{ label: "Source code on GitHub", href: "https://github.com/nabiledler92/myflood" }],
+    metaTitle: "MyFlood Flood Risk Platform Case Study | Nabil Takiyuddin",
+    metaDescription:
+      "AI Builder Cup 2026 entry: a map of modelled river flood depth and rough ringgit loss for 3,421 Malaysian businesses, with a Gemini assistant in Malay and English.",
+    summary:
+      "A web platform that shows a small business how deep river flood water could get at its premises in the model, and what that could roughly cost, with a Gemini assistant that answers in Bahasa Melayu or English.",
+    highlight: { value: "3,421", label: "businesses mapped across 5 areas" },
+    problem: [
+      "Small businesses in Malaysian river towns rarely have an easy way to see how exposed their premises are to flooding, or what a flood could cost them in stock, equipment and lost trading days.",
+      "MyFlood turns open global flood models and open map data into a per-business answer: the modelled water depth for a 1 in 10, 20 and 50 years flood, and a rough loss in ringgit. Every figure is labelled \"in the model\": it is not an official flood map, and it never says a place is safe or will flood.",
+    ],
+    approach: [
+      {
+        title: "Flood and map data",
+        text: "Combined JRC global river flood depth maps (90 m squares) with OpenStreetMap businesses, roads and relief centres, Copernicus elevation data and a record of past floods. Shah Alam is split into 56 sections with a flash flood potential score.",
+      },
+      {
+        title: "Any point in Malaysia",
+        text: "Besides the five built areas, anyone can drop a pin or use GPS to check the modelled depth at any point in Malaysia.",
+      },
+      {
+        title: "Cost engine",
+        text: "A form turns the modelled depth into a rough ringgit loss for stock, fittings and closed days. The numbers come from the cost engine, never from the AI.",
+      },
+      {
+        title: "Gemini assistant",
+        text: "Gemini answers questions through function calling over the flood data, the cost engine, Google Weather and Google Maps. It also takes voice questions, reads shop-front and stock photos, writes a one-page flood plan and finds grounded flood news.",
+      },
+    ],
+    results: {
+      metrics: [
+        { value: "3,421", label: "Businesses mapped", note: "Across 5 built areas" },
+        { value: "5", label: "Areas built", note: "Selangor, Pahang, Kelantan, Terengganu, Johor" },
+        { value: "56", label: "Shah Alam sections scored", note: "Flash flood potential" },
+        { value: "2", label: "Languages", note: "Bahasa Melayu and English" },
+      ],
+      notes: [
+        "Built areas: Shah Alam (2,445 businesses, the default), Kuantan, Kota Bharu, Kuala Terengganu and Kota Tinggi town centres.",
+        "Shah Alam's record covers 69 past floods from 1992 to 2026, by section.",
+        "Deployed on Google Cloud Run during the competition; the code is open source under the MIT licence.",
+      ],
+    },
+    tools: [
+      "Python",
+      "FastAPI",
+      "Gemini",
+      "Google Cloud Run",
+      "Google Maps Platform",
+      "MapLibre",
+      "OpenStreetMap",
+      "JRC flood maps",
+      "Copernicus DEM",
+    ],
+    role: "Team lead for the MyFlood entry in the AI Builder Cup 2026. The code was written by Putera Mohd Nilam; the original repository is github.com/puteramohammadnilam-cmd/banjir-platform.",
+    team: ["Shaqib Shahril", "Fadhli Firdaus", "Putera Mohd Nilam", "Nabil Takiyuddin"],
+    tags: ["ML", "Data Engineering"],
+    keywords: [
+      "flood risk",
+      "Malaysia",
+      "small business",
+      "Gemini",
+      "function calling",
+      "geospatial",
+      "AI Builder Cup 2026",
+      "Cloud Run",
     ],
   },
 ];
