@@ -11,18 +11,20 @@ export function Work() {
         index="04"
         code="Case studies"
         title="Featured case studies."
-        lede="Five projects from the Master of Data Science at UiTM, written up as problem, approach, results, tools and team."
+        lede="Five projects from the Master of Data Science at UiTM and one competition build, written up as problem, approach, results, tools and team."
       />
 
       <ol className="grid gap-4 lg:grid-cols-6">
         {caseStudies.map((cs, i) => {
           const lead = i === 0;
+          // After the lead card the rest sit in pairs; a final unpaired card takes the full row.
+          const lastAlone = i === caseStudies.length - 1 && (caseStudies.length - 1) % 2 === 1;
           return (
             <li
               key={cs.slug}
               data-reveal
               style={{ "--d": `${(i % 2) * 90}ms` } as React.CSSProperties}
-              className={lead ? "lg:col-span-6" : "lg:col-span-3"}
+              className={lead || lastAlone ? "lg:col-span-6" : "lg:col-span-3"}
             >
               <article
                 className={`panel panel-hover ticks group relative flex h-full flex-col overflow-hidden p-6 sm:p-8 ${

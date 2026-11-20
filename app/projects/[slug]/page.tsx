@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight } from "@/components/Icons";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "@/components/Icons";
 import { JsonLd } from "@/components/JsonLd";
 import { profile } from "@/content/profile";
-import { caseStudies, getCaseStudy } from "@/content/projects";
+import { caseContext, caseStudies, getCaseStudy } from "@/content/projects";
 import { caseStudyLd } from "@/lib/jsonld";
 import { SITE_NAME } from "@/lib/site";
 
@@ -87,10 +87,10 @@ export default async function CaseStudyPage({ params }: Props) {
   ];
 
   const facts = [
-    { label: "Course", value: `${cs.course.code} ${cs.course.name}` },
+    ...(cs.context ? [] : [{ label: "Course", value: `${cs.course.code} ${cs.course.name}` }]),
     { label: "Format", value: cs.formatLabel },
     ...(cs.date ? [{ label: "Date", value: cs.date }] : []),
-    { label: "Programme", value: "Master of Data Science, UiTM" },
+    caseContext(cs),
     ...(cs.supervisor ? [{ label: "Supervisor", value: cs.supervisor }] : []),
     ...(cs.team ? [{ label: "Team", value: `${cs.team.length} members` }] : []),
   ];
@@ -152,6 +152,17 @@ export default async function CaseStudyPage({ params }: Props) {
           >
             {cs.summary}
           </p>
+          {cs.links?.length ? (
+            <ul className="rise mt-6 flex flex-wrap gap-3" style={{ "--d": "140ms" } as React.CSSProperties}>
+              {cs.links.map((l) => (
+                <li key={l.href}>
+                  <a href={l.href} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+                    {l.label} <ArrowUpRight />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : null}
 
           <dl
             className="panel ticks rise mt-10 grid grid-cols-2 gap-px overflow-hidden bg-line lg:grid-cols-4"
