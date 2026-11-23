@@ -86,6 +86,7 @@ export function caseStudyLd(cs: CaseStudy) {
           url: SITE_URL,
         },
         ...(contributors.length ? { contributor: contributors } : {}),
+        ...(cs.recognition ? { award: cs.recognition.title } : {}),
         isPartOf: { "@type": "WebSite", "@id": WEBSITE_ID, url: SITE_URL, name: SITE_NAME },
       },
       {
