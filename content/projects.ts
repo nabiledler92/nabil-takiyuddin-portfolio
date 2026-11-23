@@ -78,10 +78,10 @@ export const caseStudies: CaseStudy[] = [
     formatLabel: "Master's dissertation",
     metaTitle: "Kopi Sentiment Analysis IDSS Case Study | Nabil Takiyuddin",
     metaDescription:
-      "Master's dissertation: sentiment analysis of 1,000+ Kopi Kenangan reviews, comparing six classifiers. Logistic Regression with SMOTE reached about 92.5%.",
+      "Master's dissertation: sentiment analysis of 1,000+ Kopi Kenangan reviews, comparing six classifiers. Logistic Regression with SMOTE reached 92.9% accuracy.",
     summary:
       "A Master of Data Science dissertation that classifies sentiment in 1,000+ code-switched Malay-English customer reviews (Kopi Kenangan case study) and turns the results into a Streamlit decision-support app with an LLM business-analyst agent.",
-    highlight: { value: "≈92.5%", label: "accuracy, Logistic Regression + SMOTE" },
+    highlight: { value: "92.9%", label: "accuracy, Logistic Regression + SMOTE" },
     problem: [
       "Independent kopi F&B SMEs account for roughly 92% of Malaysia's 136,453 F&B establishments. Their customers leave reviews constantly, but the reviews are written in informal, code-switched Malay-English that is hard to read at scale.",
       "The dissertation asks whether machine-learning sentiment analysis can turn those reviews into an intelligent decision support system (IDSS) for kopi F&B SMEs, using Kopi Kenangan as the case study.",
@@ -101,19 +101,19 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "Decision-support app",
-        text: "Built a Streamlit decision-support app in which the open-source Qwen 2.5 7B LLM (Hugging Face) acts as an AI business-analyst agent.",
+        text: "Built a Streamlit decision-support app in which the open-source Qwen 2.5 72B LLM (Hugging Face) acts as an AI business-analyst agent.",
       },
     ],
     results: {
       metrics: [
-        { value: "≈92.5%", label: "Best accuracy", note: "Logistic Regression with SMOTE" },
+        { value: "92.9%", label: "Best accuracy", note: "Logistic Regression with SMOTE" },
         { value: "20", label: "Model-condition results", note: "Across 5 experiments" },
         { value: "6", label: "Classifiers compared" },
         { value: "1,000+", label: "Customer reviews analysed" },
       ],
       notes: [
-        "Logistic Regression with SMOTE was selected as the best model, reaching about 92.5% accuracy in sentiment classification.",
-        "The work is delivered as a Streamlit decision-support app with Qwen 2.5 7B acting as an AI business-analyst agent.",
+        "Logistic Regression with SMOTE was selected as the best model, reaching 92.9% accuracy (weighted F1 0.926) in sentiment classification.",
+        "The work is delivered as a Streamlit decision-support app with Qwen 2.5 72B acting as an AI business-analyst agent.",
         "An extended abstract was prepared for PEERS 2026.",
       ],
     },
@@ -121,7 +121,7 @@ export const caseStudies: CaseStudy[] = [
       "Python",
       "Streamlit",
       "Hugging Face",
-      "Qwen 2.5 7B",
+      "Qwen 2.5 72B",
       "SMOTE",
       "Logistic Regression",
       "Naive Bayes",
@@ -133,13 +133,14 @@ export const caseStudies: CaseStudy[] = [
     role: "Individual dissertation for the Master of Data Science at Universiti Teknologi MARA (UiTM).",
     supervisor: "Ts Dr Ahmad Faiz Mohd Ghazali",
     links: [
-      { label: "Open the live app", href: "https://kopi-sentiment-idss.streamlit.app/" },
+      { label: "Open the live app", href: "https://idss.nabil-takiyuddin.dev/" },
+      { label: "Streamlit version (retrain on your data)", href: "https://kopi-sentiment-idss.streamlit.app/" },
       { label: "Source code on GitHub", href: "https://github.com/nabiledler92/IDSS-sentiment-showcase" },
     ],
     demo: {
-      url: "https://kopi-sentiment-idss.streamlit.app/",
+      url: "https://idss.nabil-takiyuddin.dev/",
       title: "Kopi sentiment decision-support app",
-      note: "Hosted on Streamlit Community Cloud. If nobody has used it recently it sleeps, and waking it takes about a minute. Try the Analyze a Review tab, or upload the synthetic sample CSV from the GitHub repo in Batch Analyze.",
+      note: "Runs on Vercel and loads instantly. Try the Analyze a Review tab, or \"Try the sample file\" in Batch Analyze, then generate an AI brief written by Qwen 2.5 72B through Hugging Face.",
     },
     tags: ["ML"],
     keywords: [
@@ -150,7 +151,7 @@ export const caseStudies: CaseStudy[] = [
       "SMOTE",
       "Logistic Regression",
       "Streamlit",
-      "Qwen 2.5 7B",
+      "Qwen 2.5 72B",
     ],
   },
   {
