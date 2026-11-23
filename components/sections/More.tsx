@@ -115,7 +115,7 @@ export function EducationSection() {
                   src={b.image}
                   alt={`${b.issuer}: ${b.name} badge`}
                   sizes="128px"
-                  className="h-16 w-auto object-contain"
+                  className={`h-16 w-auto object-contain ${b.round ? "rounded-full" : ""}`}
                 />
               );
               return (

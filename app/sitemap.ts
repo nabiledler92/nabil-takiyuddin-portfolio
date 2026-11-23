@@ -8,7 +8,7 @@ import { absoluteUrl } from "@/lib/site";
  * Fixed dates matter: if lastmod changed on every deploy, Google would learn
  * to ignore it.
  */
-const HOME_UPDATED = "2026-11-16";
+const HOME_UPDATED = "2026-11-23";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // The home page lists every case study, so it changes when any of them does.

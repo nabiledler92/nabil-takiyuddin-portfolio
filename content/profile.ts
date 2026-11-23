@@ -254,6 +254,11 @@ export const certifications: { issuer: string; items: Certification[] }[] = [
     issuer: "Google",
     items: [
       {
+        name: "Gen AI APAC Builder 2026 (featured builder, with Hack2Skill)",
+        issued: "Nov 2026",
+        url: "https://hack2skill.com/event/apac-genaiacademy?tab=meetBuilders",
+      },
+      {
         name: "Google AI Professional Certificate",
         credentialId: "IRBHCXSUIER5",
         url: "https://www.coursera.org/account/accomplishments/professional-cert/certificate/IRBHCXSUIER5",
