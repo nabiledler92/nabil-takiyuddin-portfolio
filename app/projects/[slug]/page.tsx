@@ -82,9 +82,12 @@ export default async function CaseStudyPage({ params }: Props) {
     { id: "problem", label: "Problem" },
     { id: "approach", label: "Approach" },
     { id: "results", label: "Results" },
+    ...(cs.demo ? [{ id: "demo", label: "Live demo" }] : []),
     { id: "tools", label: "Tools" },
     { id: "team", label: "Role & team" },
   ];
+  /** Section number for the HUD label, e.g. "04 · Tools", following the TOC order. */
+  const sectionIndex = (id: string) => String(toc.findIndex((t) => t.id === id) + 1).padStart(2, "0");
 
   const facts = [
     ...(cs.context ? [] : [{ label: "Course", value: `${cs.course.code} ${cs.course.name}` }]),
@@ -213,7 +216,7 @@ export default async function CaseStudyPage({ params }: Props) {
           </nav>
 
           <div className="min-w-0 space-y-16 sm:space-y-20">
-            <Block id="problem" index="01 · Problem" title="The problem">
+            <Block id="problem" index={`${sectionIndex("problem")} · Problem`} title="The problem">
               <div className="max-w-3xl space-y-4">
                 {cs.problem.map((p) => (
                   <p key={p} className="text-base leading-relaxed text-pretty text-soft sm:text-lg">
@@ -223,7 +226,7 @@ export default async function CaseStudyPage({ params }: Props) {
               </div>
             </Block>
 
-            <Block id="approach" index="02 · Approach" title="The approach">
+            <Block id="approach" index={`${sectionIndex("approach")} · Approach`} title="The approach">
               <ol className="grid gap-4 sm:grid-cols-2">
                 {cs.approach.map((a, i) => (
                   <li key={a.title} className="panel panel-hover p-5 sm:p-6">
@@ -237,7 +240,7 @@ export default async function CaseStudyPage({ params }: Props) {
               </ol>
             </Block>
 
-            <Block id="results" index="03 · Results" title={hasMetrics ? "The results" : "Results"}>
+            <Block id="results" index={`${sectionIndex("results")} · Results`} title={hasMetrics ? "The results" : "Results"}>
               {hasMetrics ? (
                 <ul className={`grid grid-cols-2 gap-4 ${cs.results.metrics.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
                   {cs.results.metrics.map((m) => (
@@ -265,7 +268,27 @@ export default async function CaseStudyPage({ params }: Props) {
               </ul>
             </Block>
 
-            <Block id="tools" index="04 · Tools" title="Tools and methods">
+            {cs.demo ? (
+              <Block id="demo" index={`${sectionIndex("demo")} · Live demo`} title="Try the app">
+                {cs.demo.note ? (
+                  <p className="max-w-3xl text-base leading-relaxed text-pretty text-soft sm:text-lg">{cs.demo.note}</p>
+                ) : null}
+                <div className="panel ticks mt-6 overflow-hidden p-0">
+                  <iframe
+                    src={`${cs.demo.url}?embed=true`}
+                    title={cs.demo.title}
+                    loading="lazy"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    className="block h-[640px] w-full border-0 bg-white sm:h-[820px]"
+                  />
+                </div>
+                <a href={cs.demo.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost mt-5">
+                  Open the app in a new tab <ArrowUpRight />
+                </a>
+              </Block>
+            ) : null}
+
+            <Block id="tools" index={`${sectionIndex("tools")} · Tools`} title="Tools and methods">
               <ul className="flex flex-wrap gap-2">
                 {cs.tools.map((t) => (
                   <li key={t} className="chip">
@@ -275,7 +298,7 @@ export default async function CaseStudyPage({ params }: Props) {
               </ul>
             </Block>
 
-            <Block id="team" index="05 · Role & team" title="Role and team">
+            <Block id="team" index={`${sectionIndex("team")} · Role & team`} title="Role and team">
               <p className="max-w-3xl text-base leading-relaxed text-pretty text-soft sm:text-lg">{cs.role}</p>
               {cs.supervisor ? (
                 <p className="mt-4 text-base text-soft sm:text-lg">
