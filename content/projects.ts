@@ -25,6 +25,11 @@ export type CaseStudy = {
   /** Human-readable label, e.g. "Dissertation" or "Group project". */
   formatLabel: string;
   date?: string;
+  /**
+   * Last time this page's content changed (YYYY-MM-DD). Used as the sitemap
+   * lastmod, so bump it only when you edit this case study.
+   */
+  updated: string;
   /** 50–60 characters. */
   metaTitle: string;
   /** 150–160 characters. */
@@ -58,6 +63,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "kopi-sentiment-idss",
     code: "CS-01",
+    updated: "2026-11-14",
     title:
       "Machine Learning-Based Sentiment Analysis for an Intelligent Decision Support System in Malaysian Kopi F&B SMEs",
     shortTitle: "Kopi sentiment analysis and decision support",
@@ -136,6 +142,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "smart-crop-recommendation",
     code: "CS-02",
+    updated: "2026-11-14",
     title:
       "Smart Crop Recommendation System: Complementing Sistem GeoTanaman by Jabatan Pertanian Malaysia",
     shortTitle: "Smart crop recommendation system",
@@ -199,6 +206,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "food-insecurity-forecasting",
     code: "CS-03",
+    updated: "2026-11-14",
     title:
       "The Rising of Food Insecurity: A Predictive Modeling for Production, Area Harvested and Yield Outcome",
     shortTitle: "Food insecurity predictive modelling",
@@ -275,6 +283,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "hive-vs-spark-sql",
     code: "CS-04",
+    updated: "2026-11-14",
     title: "Hive vs Spark SQL: Benchmarking Table Configurations and File Formats on Hadoop",
     shortTitle: "Hive vs Spark SQL benchmark",
     schemaType: "CreativeWork",
@@ -325,6 +334,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "aco-auditor-scheduling",
     code: "CS-05",
+    updated: "2026-11-14",
     title: "Ant Colony Optimization for HRDC Auditor Scheduling and Routing",
     shortTitle: "ACO auditor scheduling and routing",
     schemaType: "CreativeWork",
@@ -377,6 +387,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "myflood",
     code: "CS-06",
+    updated: "2026-11-21",
     title: "MyFlood: Flood Depth and Loss Estimates for Malaysian Small Businesses, with a Gemini Assistant",
     shortTitle: "MyFlood flood risk platform",
     schemaType: "CreativeWork",
@@ -455,6 +466,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "sirr-male-fertility",
     code: "CS-07",
+    updated: "2026-11-21",
     title: "Sirr: A Private, Bilingual First Step into Male Fertility Care",
     shortTitle: "Sirr male fertility care prototype",
     schemaType: "CreativeWork",
