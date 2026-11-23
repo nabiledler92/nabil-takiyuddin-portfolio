@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "@/components/Icons";
@@ -165,6 +166,38 @@ export default async function CaseStudyPage({ params }: Props) {
                 </li>
               ))}
             </ul>
+          ) : null}
+          {cs.recognition ? (
+            <figure
+              className="panel rise mt-8 flex max-w-2xl items-center gap-4 p-4 sm:gap-5 sm:p-5"
+              style={{ "--d": "160ms" } as React.CSSProperties}
+            >
+              <Image
+                src={cs.recognition.image}
+                alt={`${cs.recognition.title} badge`}
+                sizes="(min-width: 640px) 112px, 88px"
+                className="size-22 shrink-0 rounded-full sm:size-28"
+              />
+              <figcaption className="min-w-0">
+                <p className="label label-cyan">Recognition</p>
+                <p className="mt-1.5 font-display text-lg leading-snug font-semibold text-ink sm:text-xl">
+                  {cs.recognition.title}
+                </p>
+                <p className="mt-1.5 text-sm leading-relaxed text-pretty text-soft">{cs.recognition.detail}</p>
+                {cs.recognition.href ? (
+                  <a
+                    href={cs.recognition.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-flex items-center gap-1 font-mono text-xs text-muted underline decoration-line underline-offset-4 hover:text-cyan"
+                  >
+                    See Meet the Builders
+                    <ArrowUpRight aria-hidden="true" className="size-3" />
+                    <span className="sr-only">(opens in a new tab)</span>
+                  </a>
+                ) : null}
+              </figcaption>
+            </figure>
           ) : null}
 
           <dl

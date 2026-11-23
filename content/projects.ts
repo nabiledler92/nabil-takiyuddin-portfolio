@@ -6,6 +6,9 @@
  * To add a small project card: append an object to `moreProjects`.
  */
 
+import type { StaticImageData } from "next/image";
+import genaiApacBuilder2026 from "@/public/images/badges/google-genai-apac-builder-2026.webp";
+
 export type ProjectTag = "ML" | "Data Engineering" | "BI" | "Statistics" | "Optimisation";
 
 export const projectTags: ProjectTag[] = ["ML", "Data Engineering", "BI", "Statistics", "Optimisation"];
@@ -54,6 +57,8 @@ export type CaseStudy = {
    * must also be allowed in `frame-src` in next.config.ts, or the browser blocks it.
    */
   demo?: { url: string; title: string; note?: string };
+  /** An award or recognition for this project, shown as a badge under the page intro. */
+  recognition?: { title: string; detail: string; image: StaticImageData; href?: string };
   tags: ProjectTag[];
   keywords: string[];
 };
@@ -402,7 +407,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "myflood",
     code: "CS-06",
-    updated: "2026-11-21",
+    updated: "2026-11-23",
     title: "MyFlood: Flood Depth and Loss Estimates for Malaysian Small Businesses, with a Gemini Assistant",
     shortTitle: "MyFlood flood risk platform",
     schemaType: "CreativeWork",
@@ -412,6 +417,13 @@ export const caseStudies: CaseStudy[] = [
     date: "October 2026",
     context: { label: "Event", value: "AI Builder Cup 2026" },
     links: [{ label: "Source code on GitHub", href: "https://github.com/nabiledler92/myflood" }],
+    recognition: {
+      title: "Google Gen AI APAC Builder 2026",
+      detail:
+        "Published to Google Cloud and Hack2Skill's Meet the Builders showcase, making me one of 1,000 featured builders across APAC.",
+      image: genaiApacBuilder2026,
+      href: "https://hack2skill.com/event/apac-genaiacademy?tab=meetBuilders",
+    },
     metaTitle: "MyFlood Flood Risk Platform Case Study | Nabil Takiyuddin",
     metaDescription:
       "AI Builder Cup 2026 entry: a map of modelled river flood depth and rough ringgit loss for 3,421 Malaysian businesses, with a Gemini assistant in Malay and English.",
