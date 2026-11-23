@@ -18,9 +18,8 @@ const GA = "https://*.google-analytics.com https://*.analytics.google.com https:
 // data collection on *.clarity.ms, and c.bing.com for Clarity's cookie sync.
 const CLARITY = "https://*.clarity.ms https://c.bing.com";
 // Live app embedded on the kopi-sentiment-idss case study (content/projects.ts `demo`).
-// Streamlit Community Cloud serves the app from its subdomain and may route a sleeping
-// app through share.streamlit.io to wake it.
-const STREAMLIT_DEMOS = "https://kopi-sentiment-idss.streamlit.app https://share.streamlit.io";
+// It allows being framed by this site through its own frame-ancestors policy.
+const EMBEDDED_DEMOS = "https://idss.nabil-takiyuddin.dev";
 
 const csp = [
   "default-src 'self'",
@@ -29,7 +28,7 @@ const csp = [
   `img-src 'self' data: blob: ${GTM} ${GA} ${CLARITY} https://ssl.gstatic.com https://www.gstatic.com`,
   "font-src 'self' https://fonts.gstatic.com",
   `connect-src 'self' ${GTM} ${GA} ${CLARITY}`,
-  `frame-src ${GTM} ${STREAMLIT_DEMOS}`,
+  `frame-src ${GTM} ${EMBEDDED_DEMOS}`,
   "manifest-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
