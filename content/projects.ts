@@ -49,6 +49,11 @@ export type CaseStudy = {
   context?: { label: string; value: string };
   /** External links shown under the page intro, e.g. the source code. */
   links?: { label: string; href: string }[];
+  /**
+   * A live app embedded in a "Live demo" section of the page. The app's origin
+   * must also be allowed in `frame-src` in next.config.ts, or the browser blocks it.
+   */
+  demo?: { url: string; title: string; note?: string };
   tags: ProjectTag[];
   keywords: string[];
 };
@@ -63,7 +68,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "kopi-sentiment-idss",
     code: "CS-01",
-    updated: "2026-11-14",
+    updated: "2026-11-23",
     title:
       "Machine Learning-Based Sentiment Analysis for an Intelligent Decision Support System in Malaysian Kopi F&B SMEs",
     shortTitle: "Kopi sentiment analysis and decision support",
@@ -127,6 +132,15 @@ export const caseStudies: CaseStudy[] = [
     ],
     role: "Individual dissertation for the Master of Data Science at Universiti Teknologi MARA (UiTM).",
     supervisor: "Ts Dr Ahmad Faiz Mohd Ghazali",
+    links: [
+      { label: "Open the live app", href: "https://kopi-sentiment-idss.streamlit.app/" },
+      { label: "Source code on GitHub", href: "https://github.com/nabiledler92/IDSS-sentiment-showcase" },
+    ],
+    demo: {
+      url: "https://kopi-sentiment-idss.streamlit.app/",
+      title: "Kopi sentiment decision-support app",
+      note: "Hosted on Streamlit Community Cloud. If nobody has used it recently it sleeps, and waking it takes about a minute. Try the Analyze a Review tab, or upload the synthetic sample CSV from the GitHub repo in Batch Analyze.",
+    },
     tags: ["ML"],
     keywords: [
       "sentiment analysis",

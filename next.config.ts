@@ -17,6 +17,10 @@ const GA = "https://*.google-analytics.com https://*.analytics.google.com https:
 // Microsoft Clarity (loaded through GTM): tag loader on www.clarity.ms, script on scripts.clarity.ms,
 // data collection on *.clarity.ms, and c.bing.com for Clarity's cookie sync.
 const CLARITY = "https://*.clarity.ms https://c.bing.com";
+// Live app embedded on the kopi-sentiment-idss case study (content/projects.ts `demo`).
+// Streamlit Community Cloud serves the app from its subdomain and may route a sleeping
+// app through share.streamlit.io to wake it.
+const STREAMLIT_DEMOS = "https://kopi-sentiment-idss.streamlit.app https://share.streamlit.io";
 
 const csp = [
   "default-src 'self'",
@@ -25,7 +29,7 @@ const csp = [
   `img-src 'self' data: blob: ${GTM} ${GA} ${CLARITY} https://ssl.gstatic.com https://www.gstatic.com`,
   "font-src 'self' https://fonts.gstatic.com",
   `connect-src 'self' ${GTM} ${GA} ${CLARITY}`,
-  `frame-src ${GTM}`,
+  `frame-src ${GTM} ${STREAMLIT_DEMOS}`,
   "manifest-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
