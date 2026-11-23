@@ -22,6 +22,7 @@ import digitalMarketing from "@/public/images/badges/google-digital-marketing-ec
 import promptingEssentials from "@/public/images/badges/google-prompting-essentials.png";
 import hubspotMarketing from "@/public/images/badges/hubspot-marketing-hub.png";
 import hubspotSales from "@/public/images/badges/hubspot-sales-hub.png";
+import genaiApacBuilder from "@/public/images/badges/google-genai-apac-builder-2026.webp";
 import salesforceAE from "@/public/images/badges/salesforce-account-engagement-specialist.png";
 
 export type Badge = {
@@ -30,11 +31,20 @@ export type Badge = {
   image: StaticImageData;
   /** Verification page. */
   url?: string;
+  /** Crop to a circle, for round badges saved on a square background. */
+  round?: boolean;
 };
 
 const credly = (id: string) => `https://www.credly.com/badges/${id}`;
 
 export const badges: Badge[] = [
+  {
+    name: "Google Gen AI APAC Builder 2026 (featured builder, MyFlood)",
+    issuer: "Google Cloud and Hack2Skill",
+    image: genaiApacBuilder,
+    round: true,
+    url: "https://hack2skill.com/event/apac-genaiacademy?tab=meetBuilders",
+  },
   {
     name: "HubSpot Sales Hub Software Certified",
     issuer: "HubSpot Academy",

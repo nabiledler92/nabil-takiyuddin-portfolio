@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "@/components/Icons";
 import { Section, SectionHeading } from "@/components/SectionHeading";
@@ -62,6 +63,20 @@ export function Work() {
                       </li>
                     ))}
                   </ul>
+                  {cs.recognition ? (
+                    <p className="mt-4 inline-flex items-center gap-2.5 self-start rounded-full border border-line bg-void/50 py-1 pr-3.5 pl-1 text-xs font-medium text-ink">
+                      <Image
+                        src={cs.recognition.image}
+                        alt=""
+                        sizes="32px"
+                        className="size-8 shrink-0 rounded-full"
+                      />
+                      <span>
+                        <span className="sr-only">Recognition: </span>
+                        {cs.recognition.title}
+                      </span>
+                    </p>
+                  ) : null}
                   {!lead ? (
                     <div className="mt-auto pt-7">
                       <div className="flex items-end justify-between gap-4 border-t border-line pt-5">
