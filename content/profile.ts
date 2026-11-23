@@ -295,7 +295,7 @@ export const certifications: { issuer: string; items: Certification[] }[] = [
       },
       {
         name: "Data Analytics Professional Certificate",
-        issued: "2021",
+        issued: "2022",
         url: "https://www.credly.com/badges/06730556-d9d1-4558-b185-ad3a9cb7dc88",
       },
       { name: "Business Intelligence Professional Certificate", issued: "2022" },
