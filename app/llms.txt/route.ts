@@ -1,3 +1,4 @@
+import { articles } from "@/content/articles";
 import { experience } from "@/content/experience";
 import { certifications, education, profile } from "@/content/profile";
 import { caseStudies, moreProjects } from "@/content/projects";
@@ -47,6 +48,10 @@ export function GET() {
     "## Featured case studies",
     "",
     ...caseStudies.map((c) => `- [${c.title}](${absoluteUrl(`/projects/${c.slug}`)}): ${c.summary}`),
+    "",
+    "## Articles",
+    "",
+    ...articles.map((a) => `- [${a.title}](${absoluteUrl(`/articles/${a.slug}`)}): ${a.summary}`),
     "",
     "## More projects",
     "",

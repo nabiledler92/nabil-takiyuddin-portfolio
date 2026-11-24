@@ -1,3 +1,4 @@
+import type { Article } from "@/content/articles";
 import { profile } from "@/content/profile";
 import type { CaseStudy } from "@/content/projects";
 import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
@@ -95,6 +96,38 @@ export function caseStudyLd(cs: CaseStudy) {
           { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
           { "@type": "ListItem", position: 2, name: "Case studies", item: `${SITE_URL}/#work` },
           { "@type": "ListItem", position: 3, name: cs.shortTitle, item: url },
+        ],
+      },
+    ],
+  };
+}
+
+export function articleLd(a: Article) {
+  const url = absoluteUrl(`/articles/${a.slug}`);
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": `${url}#article`,
+        url,
+        mainEntityOfPage: url,
+        headline: a.title.length > 110 ? a.shortTitle : a.title,
+        description: a.summary,
+        inLanguage: "en",
+        keywords: a.keywords.join(", "),
+        datePublished: a.published,
+        dateModified: a.updated,
+        image: absoluteUrl("/opengraph-image"),
+        author: { "@type": "Person", "@id": PERSON_ID, name: profile.name, url: SITE_URL },
+        ...(a.caseStudy ? { about: { "@id": `${absoluteUrl(`/projects/${a.caseStudy}`)}#work` } } : {}),
+        isPartOf: { "@type": "WebSite", "@id": WEBSITE_ID, url: SITE_URL, name: SITE_NAME },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: a.shortTitle, item: url },
         ],
       },
     ],
