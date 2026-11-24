@@ -9,6 +9,8 @@ Sentry.init({
   // Answers the browser's `tunnel: true` requests and forwards them to Sentry.
   integrations: [Sentry.serveTunnelIntegration()],
   tracesSampleRate: 0,
+  // idss-web reports to the same Sentry project with site: "idss-web".
+  initialScope: { tags: { site: "portfolio" } },
   // No personal data: see lib/sentry-privacy.ts.
   dataCollection: sentryDataCollection,
 });
