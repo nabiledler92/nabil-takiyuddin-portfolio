@@ -29,6 +29,19 @@ const escapeHtml = (s: string) =>
 // Generous for a 5,000-character message plus name/email and JSON overhead.
 const MAX_BODY_BYTES = 20_000;
 
+/**
+ * Health check for uptime monitoring (Checkly). Sends nothing. 200 means the
+ * function runs and the email service is configured; 503 means form messages
+ * would fall back to mailto:. It never reveals the key or the address.
+ */
+export function GET() {
+  const configured = Boolean(process.env.RESEND_API_KEY && process.env.CONTACT_TO_EMAIL);
+  return NextResponse.json(
+    { status: configured ? "ok" : "not_configured" },
+    { status: configured ? 200 : 503, headers: { "Cache-Control": "no-store" } },
+  );
+}
+
 /** Client IP. On Vercel, x-real-ip is set by the platform and cannot be spoofed by the client. */
 function clientIp(request: Request): string {
   return (
