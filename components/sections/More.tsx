@@ -7,6 +7,7 @@ import { Section, SectionHeading } from "@/components/SectionHeading";
 import { certifications, education } from "@/content/profile";
 import { moreProjects, projectTags } from "@/content/projects";
 import { skillGroups } from "@/content/skills";
+import { trackAttrs } from "@/lib/track";
 
 export function MoreProjects() {
   return (
@@ -123,6 +124,11 @@ export function EducationSection() {
                   {b.url ? (
                     <a
                       href={b.url}
+                      {...trackAttrs("credential_click", {
+                        issuer: b.issuer,
+                        credential_name: b.name,
+                        click_type: "badge",
+                      })}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="block rounded-lg transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-cyan"
@@ -139,6 +145,11 @@ export function EducationSection() {
           </ul>
           <a
             href={credlyProfileUrl}
+            {...trackAttrs("credential_click", {
+              issuer: "Credly",
+              credential_name: "All badges",
+              click_type: "profile",
+            })}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-3 inline-flex items-center gap-1 font-mono text-xs text-muted underline decoration-line underline-offset-4 hover:text-cyan"
@@ -171,6 +182,11 @@ export function EducationSection() {
                         {it.url ? (
                           <a
                             href={it.url}
+                            {...trackAttrs("credential_click", {
+                              issuer: c.issuer,
+                              credential_name: it.name,
+                              click_type: "list",
+                            })}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="group inline-flex items-baseline gap-1 text-ink underline decoration-line underline-offset-4 transition-colors hover:text-cyan hover:decoration-cyan"

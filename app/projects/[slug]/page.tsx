@@ -8,8 +8,16 @@ import { profile } from "@/content/profile";
 import { caseContext, caseStudies, getCaseStudy } from "@/content/projects";
 import { caseStudyLd } from "@/lib/jsonld";
 import { SITE_NAME } from "@/lib/site";
+import { trackAttrs } from "@/lib/track";
 
 type Props = { params: Promise<{ slug: string }> };
+
+/** Groups a case study's external link for analytics: source_code, streamlit or live_app. */
+function linkType(href: string) {
+  if (href.includes("github.com")) return "source_code";
+  if (href.includes("streamlit.app")) return "streamlit";
+  return "live_app";
+}
 
 export const dynamicParams = false;
 
@@ -160,7 +168,13 @@ export default async function CaseStudyPage({ params }: Props) {
             <ul className="rise mt-6 flex flex-wrap gap-3" style={{ "--d": "140ms" } as React.CSSProperties}>
               {cs.links.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+                  <a
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-ghost"
+                    {...trackAttrs("case_study_link_click", { case_study: cs.slug, link_type: linkType(l.href) })}
+                  >
                     {l.label} <ArrowUpRight />
                   </a>
                 </li>
@@ -187,6 +201,11 @@ export default async function CaseStudyPage({ params }: Props) {
                 {cs.recognition.href ? (
                   <a
                     href={cs.recognition.href}
+                    {...trackAttrs("credential_click", {
+                      issuer: "Hack2Skill",
+                      credential_name: cs.recognition.title,
+                      click_type: "recognition",
+                    })}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-2 inline-flex items-center gap-1 font-mono text-xs text-muted underline decoration-line underline-offset-4 hover:text-cyan"
@@ -315,7 +334,13 @@ export default async function CaseStudyPage({ params }: Props) {
                     className="block h-[640px] w-full border-0 bg-white sm:h-[820px]"
                   />
                 </div>
-                <a href={cs.demo.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost mt-5">
+                <a
+                  href={cs.demo.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-ghost mt-5"
+                  {...trackAttrs("case_study_link_click", { case_study: cs.slug, link_type: "live_app_demo" })}
+                >
                   Open the app in a new tab <ArrowUpRight />
                 </a>
               </Block>

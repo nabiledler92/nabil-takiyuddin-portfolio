@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "@/components/Icons";
 import { Section, SectionHeading } from "@/components/SectionHeading";
 import { caseStudies } from "@/content/projects";
+import { trackAttrs } from "@/lib/track";
 
 export function Work() {
   return (
@@ -50,6 +51,11 @@ export function Work() {
                   >
                     <Link
                       href={`/projects/${cs.slug}`}
+                      {...trackAttrs("case_study_open", {
+                        case_study: cs.slug,
+                        click_location: "home_card",
+                        card_position: i + 1,
+                      })}
                       className="rounded-sm after:absolute after:inset-0 after:content-[''] focus-visible:outline-none focus-visible:after:rounded-[14px] focus-visible:after:outline-2 focus-visible:after:outline-offset-[-2px] focus-visible:after:outline-cyan"
                     >
                       {cs.title}

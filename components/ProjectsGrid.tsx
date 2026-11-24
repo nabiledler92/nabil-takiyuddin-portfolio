@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { MiniProject, ProjectTag } from "@/content/projects";
+import { track } from "@/lib/track";
 
 /** Filterable grid of smaller projects. All cards are in the server-rendered HTML. */
 export function ProjectsGrid({ projects, tags }: { projects: MiniProject[]; tags: ProjectTag[] }) {
@@ -26,7 +27,10 @@ export function ProjectsGrid({ projects, tags }: { projects: MiniProject[]; tags
               key={t}
               type="button"
               aria-pressed={on}
-              onClick={() => setFilter(t)}
+              onClick={() => {
+                setFilter(t);
+                track("project_filter", { tag: t });
+              }}
               className={`flex h-10 shrink-0 items-center gap-2 rounded-lg border px-3.5 font-mono text-[0.6875rem] tracking-[0.12em] uppercase transition-colors ${
                 on
                   ? "border-cyan bg-cyan/12 text-cyan shadow-[0_0_24px_-8px_var(--color-cyan)]"

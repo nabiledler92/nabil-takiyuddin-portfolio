@@ -7,6 +7,7 @@ import { LinkedInIcon, MailIcon, Monogram, SearchIcon } from "@/components/Icons
 import { ThemeSwitcher } from "@/components/nav/ThemeSwitcher";
 import { OPEN_PALETTE_EVENT, sections, topNav } from "@/lib/nav";
 import { goToSection } from "@/lib/scroll";
+import { trackAttrs } from "@/lib/track";
 
 const useIsoLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
@@ -369,10 +370,20 @@ export function HudNav({ email, linkedin }: { email: string; linkedin: string })
               <SearchIcon /> Search and jump
             </button>
             <div className="grid grid-cols-2 gap-2.5">
-              <a className="btn btn-ghost" href={`mailto:${email}`}>
+              <a
+                className="btn btn-ghost"
+                href={`mailto:${email}`}
+                {...trackAttrs("contact_click", { contact_type: "email", click_location: "menu" })}
+              >
                 <MailIcon /> Email
               </a>
-              <a className="btn btn-ghost" href={linkedin} target="_blank" rel="noopener noreferrer">
+              <a
+                className="btn btn-ghost"
+                href={linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                {...trackAttrs("contact_click", { contact_type: "linkedin", click_location: "menu" })}
+              >
                 <LinkedInIcon /> LinkedIn
               </a>
             </div>
