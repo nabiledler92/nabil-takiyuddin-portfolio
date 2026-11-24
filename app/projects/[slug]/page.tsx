@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "@/components/Icons";
 import { JsonLd } from "@/components/JsonLd";
+import { articleForCaseStudy } from "@/content/articles";
 import { profile } from "@/content/profile";
 import { caseContext, caseStudies, getCaseStudy } from "@/content/projects";
 import { caseStudyLd } from "@/lib/jsonld";
@@ -86,6 +87,7 @@ export default async function CaseStudyPage({ params }: Props) {
   const next = caseStudies[(idx + 1) % caseStudies.length];
   const others = caseStudies.filter((c) => c.slug !== cs.slug);
   const hasMetrics = cs.results.metrics.length > 0;
+  const article = articleForCaseStudy(cs.slug);
 
   const toc = [
     { id: "problem", label: "Problem" },
@@ -164,9 +166,16 @@ export default async function CaseStudyPage({ params }: Props) {
           >
             {cs.summary}
           </p>
-          {cs.links?.length ? (
+          {cs.links?.length || article ? (
             <ul className="rise mt-6 flex flex-wrap gap-3" style={{ "--d": "140ms" } as React.CSSProperties}>
-              {cs.links.map((l) => (
+              {article ? (
+                <li>
+                  <Link href={`/articles/${article.slug}`} className="btn btn-primary">
+                    Read the full use case <ArrowRight />
+                  </Link>
+                </li>
+              ) : null}
+              {(cs.links ?? []).map((l) => (
                 <li key={l.href}>
                   <a
                     href={l.href}

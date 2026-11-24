@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { articles } from "@/content/articles";
 import { caseStudies } from "@/content/projects";
 import { absoluteUrl } from "@/lib/site";
 
@@ -20,6 +21,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: c.updated,
       changeFrequency: "yearly" as const,
       priority: 0.8,
+    })),
+    ...articles.map((a) => ({
+      url: absoluteUrl(`/articles/${a.slug}`),
+      lastModified: a.updated,
+      changeFrequency: "yearly" as const,
+      priority: 0.7,
     })),
   ];
 }

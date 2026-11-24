@@ -18,6 +18,10 @@
   --color-line-strong: rgb(125 211 252 / 0.34);
   --color-danger: #ffb0b0;
   --color-danger-line: #ff8e8e;
+  /* Chart series. Checked with the dataviz palette validator against --color-deep in each theme. */
+  --color-viz-1: #1b98c0;
+  --color-viz-2: #d95926;
+  --color-viz-neutral: #34445c;
 
   --font-display: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
@@ -56,6 +60,9 @@
   --color-line-strong: rgb(16 52 96 / 0.3);
   --color-danger: #b42318;
   --color-danger-line: #d04545;
+  --color-viz-1: #016f99;
+  --color-viz-2: #eb6834;
+  --color-viz-neutral: #c3ccda;
   --shadow-tint: rgb(20 40 80 / 0.22);
   --grid-line: rgb(16 52 96 / 0.06);
   --glow-blue: rgb(70 150 230 / 0.22);
@@ -623,6 +630,44 @@ dialog::backdrop {
   .holo-sweep {
     display: none;
   }
+}
+
+/* ---------- Article charts ---------- */
+
+/* Diagonal stripes: a second cue for a sub-category that shares a series colour. */
+.viz-hatch {
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0 4px,
+    color-mix(in oklab, var(--color-deep) 70%, transparent) 4px 7px
+  );
+}
+.viz-tip {
+  background: color-mix(in oklab, var(--color-deep) 94%, transparent);
+  backdrop-filter: blur(6px);
+}
+.viz-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  color: var(--color-soft);
+}
+.viz-table th {
+  padding: 0.5rem 0.75rem 0.5rem 0;
+  border-bottom: 1px solid var(--color-line-strong);
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-dim);
+}
+.viz-table td {
+  padding: 0.5rem 0.75rem 0.5rem 0;
+  border-bottom: 1px solid var(--color-line);
+  font-variant-numeric: tabular-nums;
+  vertical-align: top;
 }
 
 @media print {
