@@ -14,6 +14,11 @@ const isDev = process.env.NODE_ENV === "development";
 const GTM = "https://www.googletagmanager.com";
 const GTM_PREVIEW = "https://tagmanager.google.com";
 const GA = "https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net";
+// GA4 with Google Signals also sends to analytics.google.com, www.google.com and the visitor's
+// regional Google domain (www.google.<TLD>). CSP can't wildcard a TLD, so the regional domains
+// for the main audience are listed; hits to other regions are only Signals extras.
+// Flagged by GTM container diagnostics on 2026-11-24.
+const GOOGLE = "https://*.google.com https://*.google.com.my https://*.google.com.sg";
 // Microsoft Clarity (loaded through GTM): tag loader on www.clarity.ms, script on scripts.clarity.ms,
 // data collection on *.clarity.ms, and c.bing.com for Clarity's cookie sync.
 const CLARITY = "https://*.clarity.ms https://c.bing.com";
@@ -25,9 +30,9 @@ const csp = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline' ${GTM} ${GTM_PREVIEW} ${CLARITY}${isDev ? " 'unsafe-eval' https://va.vercel-scripts.com" : ""}`,
   `style-src 'self' 'unsafe-inline' ${GTM_PREVIEW} https://fonts.googleapis.com`,
-  `img-src 'self' data: blob: ${GTM} ${GA} ${CLARITY} https://ssl.gstatic.com https://www.gstatic.com`,
+  `img-src 'self' data: blob: ${GTM} ${GA} ${GOOGLE} ${CLARITY} https://ssl.gstatic.com https://www.gstatic.com`,
   "font-src 'self' https://fonts.gstatic.com",
-  `connect-src 'self' ${GTM} ${GA} ${CLARITY}`,
+  `connect-src 'self' ${GTM} ${GA} ${GOOGLE} ${CLARITY}`,
   `frame-src ${GTM} ${EMBEDDED_DEMOS}`,
   "manifest-src 'self'",
   "object-src 'none'",
