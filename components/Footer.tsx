@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Monogram } from "@/components/Icons";
 import { profile } from "@/content/profile";
 import { caseStudies } from "@/content/projects";
+import { trackAttrs } from "@/lib/track";
 
 export function Footer() {
   return (
@@ -27,7 +28,11 @@ export function Footer() {
           <ul className="mt-4 space-y-2.5">
             {caseStudies.map((c) => (
               <li key={c.slug}>
-                <Link href={`/projects/${c.slug}`} className="text-sm text-soft transition-colors hover:text-cyan">
+                <Link
+                  href={`/projects/${c.slug}`}
+                  className="text-sm text-soft transition-colors hover:text-cyan"
+                  {...trackAttrs("case_study_open", { case_study: c.slug, click_location: "footer" })}
+                >
                   {c.shortTitle}
                 </Link>
               </li>
@@ -39,7 +44,11 @@ export function Footer() {
           <h2 className="label label-cyan">Contact</h2>
           <ul className="mt-4 space-y-2.5 text-sm">
             <li>
-              <a href={`mailto:${profile.email}`} className="break-all text-soft transition-colors hover:text-cyan">
+              <a
+                href={`mailto:${profile.email}`}
+                className="break-all text-soft transition-colors hover:text-cyan"
+                {...trackAttrs("contact_click", { contact_type: "email", click_location: "footer" })}
+              >
                 {profile.email}
               </a>
             </li>
@@ -49,6 +58,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer me"
                 className="text-soft transition-colors hover:text-cyan"
+                {...trackAttrs("contact_click", { contact_type: "linkedin", click_location: "footer" })}
               >
                 LinkedIn<span className="sr-only"> (opens in a new tab)</span>
               </a>

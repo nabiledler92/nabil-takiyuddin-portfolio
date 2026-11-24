@@ -6,6 +6,7 @@ import { CopyIcon, FileIcon, HashIcon, LinkedInIcon, MailIcon, SearchIcon } from
 import { themeOptions, useThemePref } from "@/components/nav/ThemeSwitcher";
 import { OPEN_PALETTE_EVENT, sections } from "@/lib/nav";
 import { setThemePref, type ThemePref } from "@/lib/theme";
+import { track } from "@/lib/track";
 import { goToSection } from "@/lib/scroll";
 
 export type PaletteCase = { slug: string; code: string; title: string; course: string };
@@ -53,6 +54,7 @@ export function CommandPalette({
   const open = useCallback(() => {
     const d = dialogRef.current;
     if (!d || d.open) return;
+    track("command_palette_open");
     setQuery("");
     setActive(0);
     setCopied(false);
@@ -134,6 +136,8 @@ export function CommandPalette({
   const runItem = (item: Item | undefined) => {
     if (!item) return;
     const a = item.action;
+    track("command_palette_select", { item_kind: a.kind, item_label: item.label });
+    if (a.kind === "theme") track("theme_change", { theme: a.pref });
     if (a.kind === "copy") {
       navigator.clipboard
         .writeText(email)

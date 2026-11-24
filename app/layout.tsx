@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Footer } from "@/components/Footer";
+import { ClickTracker } from "@/components/ClickTracker";
 import { RevealObserver } from "@/components/fx/RevealObserver";
 import { CommandPalette } from "@/components/nav/CommandPalette";
 import { HudNav } from "@/components/nav/HudNav";
@@ -92,6 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <CommandPalette cases={paletteCases} email={profile.email} linkedin={profile.linkedin} />
         <RevealObserver />
+        <ClickTracker />
         <Analytics />
       </body>
     </html>

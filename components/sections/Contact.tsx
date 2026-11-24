@@ -2,6 +2,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { ArrowUpRight, LinkedInIcon, MailIcon } from "@/components/Icons";
 import { Section, SectionHeading } from "@/components/SectionHeading";
 import { profile } from "@/content/profile";
+import { trackAttrs } from "@/lib/track";
 
 export function Contact() {
   return (
@@ -16,7 +17,11 @@ export function Contact() {
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
         <div className="min-w-0 space-y-4" data-reveal>
-          <a href={`mailto:${profile.email}`} className="panel panel-hover ticks group flex items-center gap-4 p-5 sm:p-6">
+          <a
+            href={`mailto:${profile.email}`}
+            className="panel panel-hover ticks group flex items-center gap-4 p-5 sm:p-6"
+            {...trackAttrs("contact_click", { contact_type: "email", click_location: "contact" })}
+          >
             <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-line-strong bg-cyan/8 text-cyan">
               <MailIcon width={20} height={20} />
             </span>
@@ -30,6 +35,7 @@ export function Contact() {
             target="_blank"
             rel="noopener noreferrer me"
             className="panel panel-hover group flex items-center gap-4 p-5 sm:p-6"
+            {...trackAttrs("contact_click", { contact_type: "linkedin", click_location: "contact" })}
           >
             <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-line-strong bg-cyan/8 text-cyan">
               <LinkedInIcon width={20} height={20} />

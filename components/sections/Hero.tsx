@@ -4,6 +4,7 @@ import { Decode } from "@/components/fx/Decode";
 import { HeroFx } from "@/components/fx/HeroFx";
 import { profile } from "@/content/profile";
 import photo from "@/public/images/nabil-takiyuddin.jpg";
+import { trackAttrs } from "@/lib/track";
 
 export function Hero() {
   return (
@@ -49,13 +50,19 @@ export function Hero() {
           </p>
 
           <div className="rise mt-8 flex flex-wrap gap-3" style={{ "--d": "220ms" } as React.CSSProperties}>
-            <a href="#work" className="btn btn-primary">
+            <a href="#work" className="btn btn-primary" {...trackAttrs("hero_cta_click", { cta: "view_work" })}>
               View work <ArrowRight />
             </a>
-            <a href="#contact" className="btn btn-ghost">
+            <a href="#contact" className="btn btn-ghost" {...trackAttrs("hero_cta_click", { cta: "contact" })}>
               Contact
             </a>
-            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer me" className="btn btn-ghost">
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer me"
+              className="btn btn-ghost"
+              {...trackAttrs("contact_click", { contact_type: "linkedin", click_location: "hero" })}
+            >
               <LinkedInIcon /> LinkedIn <ArrowUpRight width={14} height={14} />
               <span className="sr-only">(opens in a new tab)</span>
             </a>
