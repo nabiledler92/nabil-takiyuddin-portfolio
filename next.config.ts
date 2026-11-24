@@ -6,7 +6,8 @@ const isDev = process.env.NODE_ENV === "development";
 // 'unsafe-inline' is required for the inline data-js script in app/layout.tsx and Next.js bootstrap scripts
 // on statically rendered pages (nonces would force every page to render dynamically).
 // 'unsafe-eval' is only needed by the dev server.
-// Vercel Analytics is served from the same origin (/_vercel/insights) in production;
+// Vercel Analytics and Speed Insights are served from the same origin (/_vercel/insights,
+// /_vercel/speed-insights) in production;
 // in development it loads a debug script from va.vercel-scripts.com.
 //
 // Google Tag Manager + GA4 (including Google Signals and GTM Preview / Tag Assistant).
