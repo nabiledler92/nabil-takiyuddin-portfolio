@@ -183,7 +183,7 @@ export default function AutoOntologyArticle() {
                 className="btn btn-ghost"
                 {...trackAttrs("case_study_link_click", { case_study: SLUG, link_type: "source_code" })}
               >
-                Source code and synthetic data <ArrowUpRight />
+                Source code on GitHub <ArrowUpRight />
               </a>
             </li>
           </ul>
