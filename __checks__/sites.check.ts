@@ -1,10 +1,23 @@
-import { ApiCheck, AssertionBuilder } from "checkly/constructs";
+import { ApiCheck, AssertionBuilder, SlackAppAlertChannel } from "checkly/constructs";
 
 const SITE = "https://nabil-takiyuddin.dev";
 const IDSS = "https://idss.nabil-takiyuddin.dev";
 
+// Alerts go to Slack #alerts through the Checkly Slack app (connected in
+// Checkly → Settings → Integrations). Failures, recoveries and SSL expiry only;
+// slow-but-working (degraded) responses stay quiet.
+const slackAlerts = new SlackAppAlertChannel("slack-alerts", {
+  slackChannels: ["#alerts"],
+  sendFailure: true,
+  sendRecovery: true,
+  sendDegraded: false,
+  sslExpiry: true,
+  sslExpiryThreshold: 7,
+});
+
 // Responses slower than this are flagged as degraded; past the max they fail.
-const timing = { degradedResponseTime: 3000, maxResponseTime: 10000 };
+// Every check alerts to Slack.
+const timing = { degradedResponseTime: 3000, maxResponseTime: 10000, alertChannels: [slackAlerts] };
 
 new ApiCheck("portfolio-home", {
   name: "Portfolio: home page",
