@@ -16,10 +16,14 @@ const GTM = "https://www.googletagmanager.com";
 const GTM_PREVIEW = "https://tagmanager.google.com";
 const GA = "https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net";
 // GA4 with Google Signals also sends to analytics.google.com, www.google.com and the visitor's
-// regional Google domain (www.google.<TLD>). CSP can't wildcard a TLD, so the regional domains
-// for the main audience are listed; hits to other regions are only Signals extras.
-// Flagged by GTM container diagnostics on 2026-11-24.
+// regional Google domain (www.google.<TLD>). CSP can't wildcard a TLD. connect-src keeps the
+// explicit list below; img-src allows any HTTPS image (see IMG_ANY) so the regional
+// ga-audiences pixel loads for visitors from every country.
+// Flagged by GTM container diagnostics on 2026-11-24 and again for img-src on 2026-11-25.
 const GOOGLE = "https://*.google.com https://*.google.com.my https://*.google.com.sg";
+// Images can't run code, and script-src/connect-src still limit what a page can execute or
+// fetch, so allowing HTTPS images from any host is a low-risk way to cover www.google.<TLD>.
+const IMG_ANY = "https:";
 // Microsoft Clarity (loaded through GTM): tag loader on www.clarity.ms, script on scripts.clarity.ms,
 // data collection on *.clarity.ms, and c.bing.com for Clarity's cookie sync.
 const CLARITY = "https://*.clarity.ms https://c.bing.com";
@@ -31,7 +35,7 @@ const csp = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline' ${GTM} ${GTM_PREVIEW} ${CLARITY}${isDev ? " 'unsafe-eval' https://va.vercel-scripts.com" : ""}`,
   `style-src 'self' 'unsafe-inline' ${GTM_PREVIEW} https://fonts.googleapis.com`,
-  `img-src 'self' data: blob: ${GTM} ${GA} ${GOOGLE} ${CLARITY} https://ssl.gstatic.com https://www.gstatic.com`,
+  `img-src 'self' data: blob: ${IMG_ANY}`,
   "font-src 'self' https://fonts.gstatic.com",
   `connect-src 'self' ${GTM} ${GA} ${GOOGLE} ${CLARITY}`,
   `frame-src ${GTM} ${EMBEDDED_DEMOS}`,
