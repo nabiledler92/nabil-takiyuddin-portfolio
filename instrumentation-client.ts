@@ -10,6 +10,8 @@ Sentry.init({
   // don't drop them and the CSP needs no Sentry hosts. See sentry.server.config.ts.
   tunnel: true,
   tracesSampleRate: 0,
+  // idss-web reports to the same Sentry project with site: "idss-web".
+  initialScope: { tags: { site: "portfolio" } },
   // No personal data: see lib/sentry-privacy.ts.
   dataCollection: sentryDataCollection,
 });
