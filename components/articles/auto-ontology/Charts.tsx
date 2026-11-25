@@ -9,9 +9,9 @@ import { batches, channels, wonByMonth, type Outcome } from "./data";
  * a hover/focus tooltip and a table view, so nothing depends on colour alone.
  */
 
-type Tip = { x: number; y: number; content: React.ReactNode } | null;
+export type Tip = { x: number; y: number; content: React.ReactNode } | null;
 
-function Tooltip({ tip }: { tip: Tip }) {
+export function Tooltip({ tip }: { tip: Tip }) {
   if (!tip) return null;
   return (
     <div
@@ -24,7 +24,7 @@ function Tooltip({ tip }: { tip: Tip }) {
   );
 }
 
-function Legend({ items }: { items: { label: string; swatch: string }[] }) {
+export function Legend({ items }: { items: { label: string; swatch: string }[] }) {
   return (
     <ul className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-soft">
       {items.map((i) => (
@@ -37,7 +37,7 @@ function Legend({ items }: { items: { label: string; swatch: string }[] }) {
   );
 }
 
-function DataTable({ summary, children }: { summary: string; children: React.ReactNode }) {
+export function DataTable({ summary, children }: { summary: string; children: React.ReactNode }) {
   return (
     <details className="group mt-5">
       <summary className="cursor-pointer font-mono text-[0.6875rem] tracking-[0.12em] text-muted uppercase transition-colors hover:text-cyan">
@@ -49,7 +49,7 @@ function DataTable({ summary, children }: { summary: string; children: React.Rea
 }
 
 /** Position a tooltip relative to `wrap` from an element's box. */
-function tipAt(wrap: HTMLElement | null, el: Element) {
+export function tipAt(wrap: HTMLElement | null, el: Element) {
   if (!wrap) return { x: 0, y: 0 };
   const w = wrap.getBoundingClientRect();
   const r = el.getBoundingClientRect();
@@ -77,10 +77,12 @@ export function RunStrips() {
   return (
     <figure className="panel ticks p-5 sm:p-7">
       <figcaption>
-        <p className="font-display text-lg font-semibold tracking-tight text-ink">Same question, 8 runs per setup</p>
+        <p className="font-display text-lg font-semibold tracking-tight text-ink">
+          Same question, 8 tries each: from 3 to 8 correct
+        </p>
         <p className="mt-1 text-sm text-muted">
-          Each square is one run, scored by value against the known-correct answer. Squares are grouped by outcome, not
-          in run order.
+          Real pilot data, 8 runs per batch. Each square is one run, scored by value against the known-correct answer.
+          Squares are grouped by outcome, not in run order.
         </p>
       </figcaption>
       <div className="mt-4">
@@ -154,6 +156,7 @@ export function RunStrips() {
               <th>Correct</th>
               <th>Wrong</th>
               <th>No answer</th>
+              <th>Median time</th>
             </tr>
           </thead>
           <tbody>
@@ -167,6 +170,7 @@ export function RunStrips() {
                   {b.constants ? ` (${b.constants} constants-only)` : ""}
                 </td>
                 <td>{b.none}</td>
+                <td>{b.medianSeconds} s</td>
               </tr>
             ))}
           </tbody>
