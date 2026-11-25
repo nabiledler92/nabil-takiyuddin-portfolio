@@ -50,6 +50,7 @@ const toc = [
   { id: "working", label: "What worked" },
   { id: "results", label: "The results" },
   { id: "kumo", label: "Side quest: Kumo" },
+  { id: "decisions", label: "Business decisions" },
   { id: "lessons", label: "Lessons" },
   { id: "limits", label: "Limits" },
   { id: "reproduce", label: "Reproduce it" },
@@ -417,6 +418,84 @@ export default function AutoOntologyArticle() {
                 real signal, so there was nothing extra for a model to learn. The useful point is the order of work:{" "}
                 <B>measure a simple baseline first</B>. On small data a per-channel rate is a tough number to beat, and
                 if a model cannot beat it, the cheaper answer wins.
+              </P>
+            </Section>
+
+            <Section id="decisions" title="What it means for business decisions">
+              <P>
+                Funnel numbers end up in budget meetings: which channel gets more spend, whether the sales team is
+                converting, whether last quarter was better than this one. A wrong number there is not a reporting bug;
+                it moves money. Here is how a governed layer like this one changes those decisions, and where it does
+                not help yet.
+              </P>
+              <div className="overflow-x-auto">
+                <table className="viz-table">
+                  <thead>
+                    <tr>
+                      <th>Decision</th>
+                      <th>What the layer changes</th>
+                      <th>What I saw</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Which number do we trust in the meeting?</td>
+                      <td>
+                        One agreed definition per figure, so marketing, sales and finance start from the same number
+                        instead of arguing about whose sheet is right
+                      </td>
+                      <td>The SQL metrics matched the company’s own reference figures exactly</td>
+                    </tr>
+                    <tr>
+                      <td>Where should the next channel budget go?</td>
+                      <td>
+                        Channel results always use the agreed channel group, not messy raw sources, so channels are
+                        compared like for like
+                      </td>
+                      <td>
+                        Referral leads were wrong from the raw source column until a view carried the agreed channel
+                        group
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Can I get an answer before the decision, not after?</td>
+                      <td>Managers ask in plain English and get a number with its SQL in seconds</td>
+                      <td>Median answer 21 seconds in the final setup; still read the SQL before acting</td>
+                    </tr>
+                    <tr>
+                      <td>Can we defend the number later?</td>
+                      <td>Every answer carries the query behind it, so a decision can be traced back to its data</td>
+                      <td>Answers came back with their SQL, which is how the wrong ones were caught</td>
+                    </tr>
+                    <tr>
+                      <td>What can we not decide yet?</td>
+                      <td>
+                        Missing data is reported instead of guessed, which stops decisions built on invented figures
+                      </td>
+                      <td>
+                        Asked for ad spend, it said the data had none, so CAC and ROAS need ad-platform spend first
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Do we need a prediction tool?</td>
+                      <td>A simple baseline first shows whether a paid model adds anything</td>
+                      <td>A per-channel rate matched Kumo Engine on the synthetic data</td>
+                    </tr>
+                    <tr>
+                      <td>Can we trust the trend?</td>
+                      <td>Building the layer surfaces data problems that would quietly bend a decision</td>
+                      <td>
+                        Untagged traffic landing in “direct” and won dates that look recorded late make channel and
+                        month-on-month comparisons less reliable until fixed
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <P>
+                The honest version: this makes decisions faster and easier to check, not automatic. With 8 runs per
+                batch and nothing certified yet, a person should still read the SQL behind any number that moves a
+                budget.
               </P>
             </Section>
 

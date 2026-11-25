@@ -48,6 +48,7 @@ export const articles: Article[] = [
       "LLM evaluation",
       "Kumo Engine",
       "lead scoring",
+      "data-driven decision making",
       "use case",
     ],
   },
