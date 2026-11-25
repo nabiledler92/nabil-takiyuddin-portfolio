@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { ChannelChart, RunStrips, WonDateChart } from "@/components/articles/auto-ontology/Charts";
-import { funnelTail, rawSources, sample } from "@/components/articles/auto-ontology/data";
+import { Architecture } from "@/components/articles/auto-ontology/Architecture";
+import { CompileChart, KumoChart, QuestionSetsChart, SpeedChart } from "@/components/articles/auto-ontology/ResultCharts";
+import { rawSources, sample } from "@/components/articles/auto-ontology/data";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "@/components/Icons";
 import { JsonLd } from "@/components/JsonLd";
 import { getArticle } from "@/content/articles";
@@ -42,12 +44,13 @@ export const metadata: Metadata = {
 
 const toc = [
   { id: "problem", label: "The problem" },
-  { id: "setup", label: "What I built" },
-  { id: "sample", label: "Sample data" },
-  { id: "tests", label: "How I tested" },
-  { id: "results", label: "Results" },
-  { id: "screens", label: "Screenshots" },
-  { id: "value", label: "Marketing & CRM" },
+  { id: "setup", label: "The setup" },
+  { id: "measure", label: "How I measured" },
+  { id: "not-working", label: "What did not work" },
+  { id: "working", label: "What worked" },
+  { id: "results", label: "The results" },
+  { id: "kumo", label: "Side quest: Kumo" },
+  { id: "lessons", label: "Lessons" },
   { id: "limits", label: "Limits" },
   { id: "reproduce", label: "Reproduce it" },
 ];
@@ -98,17 +101,7 @@ function Shot({ src, alt, caption }: { src: StaticImageData; alt: string; captio
   );
 }
 
-function Stat({ value, label, note }: { value: string; label: string; note?: string }) {
-  return (
-    <li className="panel ticks flex flex-col p-5">
-      <p className="num-gradient font-display text-[2rem] leading-none font-semibold tracking-[-0.03em] sm:text-[2.5rem]">
-        {value}
-      </p>
-      <p className="mt-3 text-sm leading-snug font-medium text-ink">{label}</p>
-      {note ? <p className="mt-1 font-mono text-[0.6875rem] leading-relaxed tracking-[0.06em] text-muted">{note}</p> : null}
-    </li>
-  );
-}
+const B = ({ children }: { children: React.ReactNode }) => <strong className="text-ink">{children}</strong>;
 
 const fmt = (n: number) => n.toLocaleString("en-US");
 
@@ -189,8 +182,10 @@ export default function AutoOntologyArticle() {
           </ul>
           <p className="rise mt-8 max-w-3xl rounded-xl border border-line bg-cyan/5 px-4 py-3 text-sm leading-relaxed text-soft">
             <span className="font-semibold text-ink">About the data.</span> The pilot ran on a real CRM export from an
-            anonymous B2B services company. Nothing from that export appears here. The test results are outcome counts
-            only. Every chart, table and screenshot of data comes from a seeded synthetic CRM built to have the same quirks.
+            anonymous B2B services company. Nothing from that export appears here: from the real data I only report test
+            scores, such as how many answers were right and how long they took. Every chart of data values, every table
+            of records and every screenshot comes from a seeded synthetic CRM built to have the same quirks. The Kumo
+            Engine test ran on synthetic data only.
           </p>
         </header>
 
@@ -217,18 +212,18 @@ export default function AutoOntologyArticle() {
           <div className="min-w-0 space-y-16 sm:space-y-20">
             <Section id="problem" title="One word, many meanings, numbers nobody can audit">
               <P>
-                Marketing funnel numbers often live in pivot sheets. The word “leads” means different things in
-                different tabs, raw lead sources are messy, and when two reports disagree nobody can say which one is
-                right.
+                Marketing funnel numbers usually live in pivot sheets. The word “leads” means one thing in one tab and
+                something else in the next, raw lead sources are messy, and when two reports disagree nobody can say
+                which one is right.
               </P>
               <P>
-                An <strong className="text-ink">ontology layer</strong> is a shared set of business definitions that
-                sits on top of the data: what a lead is, when a deal counts as won, which channel a visit belongs to.
-                The idea is that anyone can ask a funnel question in plain English and get an answer that follows
-                the agreed definitions, with the SQL shown so the number can be checked.
+                An <B>ontology layer</B> is a shared set of business definitions that sits on top of the data: what a
+                lead is, when a deal counts as won, which channel a contact belongs to. The promise is that anyone can
+                ask a funnel question in plain English and get an answer that follows the agreed definitions, with the
+                SQL shown so the number can be checked.
               </P>
               <P>
-                I wanted to know whether that works in practice, so I tested it with{" "}
+                I wanted to know if that holds up, correctly and every time, so I tested{" "}
                 <a
                   href="https://github.com/NVIDIA/auto-ontology"
                   target="_blank"
@@ -237,17 +232,19 @@ export default function AutoOntologyArticle() {
                 >
                   NVIDIA Auto Ontology
                 </a>{" "}
-                (open source, Apache-2.0) on CRM data from a company with no data warehouse yet.
+                (open source, Apache-2.0) on a real CRM export from a company with no data warehouse yet. The short
+                version: the defaults failed, more words and a bigger model only helped partly, and the big jump came
+                from <B>taking choices away from the AI</B>.
               </P>
             </Section>
 
-            <Section id="setup" title="What I built">
+            <Section id="setup" title="The setup">
               <ol className="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-4">
                 {[
-                  ["01", "CRM export", "Persons, deals, leads, stages"],
+                  ["01", "CRM export", "Contacts, deals, leads, stages"],
                   ["02", "PostgreSQL", "8 tables; email and phone dropped first"],
-                  ["03", "Auto Ontology", "Terms, column descriptions, table links"],
-                  ["04", "Chat, MCP, API", "Answers with the SQL used"],
+                  ["03", "Auto Ontology", "Business terms, column descriptions, table links"],
+                  ["04", "SQL metrics", "The agreed funnel rules, written by hand"],
                 ].map(([n, t, d]) => (
                   <li key={n} className="bg-deep/95 p-4 sm:p-5">
                     <p className="font-mono text-[0.6875rem] tracking-[0.16em] text-cyan">STEP {n}</p>
@@ -257,96 +254,223 @@ export default function AutoOntologyArticle() {
                 ))}
               </ol>
               <P>
-                Auto Ontology read the database, sampled values and drafted the business map on its own: business
-                terms, descriptions for almost every column, and the links between tables. It did not write any
-                business rules, so I added the agreed funnel definitions myself as{" "}
-                <strong className="text-ink">10 SQL metrics</strong>: leads, qualified leads, SQLs, won deals, won
-                revenue, a channel view and a canonical monthly funnel. Run directly, those metrics matched the
-                client’s own reference figures exactly.
+                I loaded the CRM export into Postgres as 8 tables. Auto Ontology then read the database, sampled values
+                and drafted a business map on its own: terms such as Deal and Lead, a description for each column, and
+                the links between tables. It writes no business rules, so I added the agreed funnel definitions myself
+                as <B>10 SQL metrics</B>: leads, qualified leads, SQLs (sales-qualified leads), won deals, won revenue and channel results. Run
+                directly, those metrics matched the company’s own reference figures exactly.
               </P>
+              <P>
+                The question was whether the chat agent on top would use those definitions when someone asked in plain
+                English.
+              </P>
+              <P>
+                <B>Which models.</B> Auto Ontology does not run a model locally. It calls NVIDIA’s hosted models through
+                their API, once to build the map and again for every question. B1 and B2 used the tool’s smaller
+                default model, <B>NVIDIA Nemotron 3.5 Lightning</B>, for answering; from B3 on, answers came from{" "}
+                <B>NVIDIA Nemotron Ultra</B>, a larger model. The database, the ontology and the agent ran on my
+                machine in Docker. Kumo Engine, in the side test, ran on a local CPU.
+              </P>
+              <Architecture />
               <Shot
                 src={graphImg}
                 alt="Auto Ontology exploration view showing four terms, Person, Deal, Lead and Stage, connected by lines."
-                caption="The ontology graph Auto Ontology drafted for the synthetic CRM: four terms and the links between them."
+                caption="The business map Auto Ontology drafted for the synthetic CRM: four terms and the links between them."
               />
+            </Section>
+
+            <Section id="measure" title="How I measured: the same question, 8 times">
               <P>
-                The first build reported success while 9 model calls had failed. The hosted endpoint rejected one
-                field that the tool’s client library sends, and every model I tried that responded failed the same
-                way. A patch of about six lines switched the client to tool calling and fixed it.
+                A chat demo that answers one question well proves very little. AI answers vary from run to run, so I
+                asked the <B>same funnel question 8 times per setup</B>: for one month, how many leads, qualified leads,
+                SQLs and won deals, and how much won revenue. Every answer was scored by value against a known-correct
+                result computed directly in SQL.
               </P>
+              <P>
+                Scoring by value matters. My first scoring script compared column names and wrongly failed two correct
+                answers. I rescored every batch by value, and all numbers here are the corrected ones.
+              </P>
+              <P>
+                Between batches I changed one thing at a time. Later I also ran two larger sets of plain-language
+                questions, asked once each, to see whether the fix carried over beyond one question.
+              </P>
+              <Shot
+                src={chatImg}
+                alt="Chat answer saying 13 deals were won in November 2025, with the SQL that filters on won_time and a result table."
+                caption="A chat answer with its SQL, on the synthetic CRM. The SQL is what makes the answer checkable."
+              />
+            </Section>
+
+            <Section id="not-working" title="What did not work">
+              <P>
+                <B>The default build.</B> The first build reported success while 9 model calls had failed. The hosted
+                endpoint rejected one field that the tool’s client library sends. I tried 7 hosted models; the 5 that
+                responded all failed the same way, so changing the model would not have helped. The result was thin:
+                104 of 130 columns described and a single link between tables. A patch of about six lines fixed it by
+                sending requests through the endpoint’s OpenAI-compatible client with tool calling.
+              </P>
+              <P>
+                <B>Putting the rules in descriptions.</B> With the default model (Nemotron 3.5 Lightning) and the funnel rules written into the
+                term descriptions, 3 of 8 answers were right (B1). The most common error was counting won deals by the
+                month they were created instead of the month they were won.
+              </P>
+              <WonDateChart />
+              <P>
+                On the synthetic CRM, {sample.wonLaterMonth} of {sample.won} won deals were won in a later month than
+                they were created. Ask “how many deals did we win in November?” and count by creation month, and you
+                get 0 instead of 13. On the real data the same trap produced confident, wrong answers.
+              </P>
+              <P>
+                <B>One big canonical query.</B> I gave the agent a single query that computes the whole monthly funnel.
+                It ignored it, and the score dropped to 2 of 8 (B2).
+              </P>
+              <P>
+                <B>A bigger model on its own.</B> Switching to a larger model for answering (Nemotron Ultra) removed the
+                worst failures, no answer at all and SQL made only of typed-in numbers, but it still guessed the rules:
+                4 of 8 (B3). Adding one narrow metric that stated the won-date rule lifted it to 6 of 8 (B4), and then
+                two different errors appeared. Fixes did not stack neatly.
+              </P>
+            </Section>
+
+            <Section id="working" title="What worked: remove choices instead of adding words">
+              <P>
+                Every failing answer had the same shape. The agent had several plausible ways to compute a number and
+                picked the wrong one: the wrong date column, the wrong table for “lead”, a raw source column instead of
+                the agreed channel group. More description gave it more to read, not fewer ways to go wrong.
+              </P>
+              <P>So I took the choices away:</P>
+              <Bullets
+                items={[
+                  <>
+                    <B>Narrow, single-purpose metrics.</B> One metric per way of computing one figure, each stating one
+                    rule, such as “won deals are counted by won date”.
+                  </>,
+                  <>
+                    <B>Database views that build the rules in.</B> A view of won deals with the won month already
+                    worked out, a view of deals that carries the agreed channel group, and a monthly funnel view. The
+                    agent no longer has to know the rule; the only column on offer is the right one.
+                  </>,
+                  <>
+                    <B>Hiding the tables that confused it.</B> Two tables were hidden from the agent. In the synthetic
+                    demo the equivalent is an inbox table also called “leads”, which is not the funnel’s definition of a
+                    lead.
+                  </>,
+                  <>
+                    <B>One stated definition for every ambiguous word.</B> “SQL” and “win rate” were guessed differently
+                    from run to run until a metric stated them. Win rate alone has two common definitions: won out of
+                    closed deals, or won out of all deals.
+                  </>,
+                ]}
+              />
+              <Shot
+                src={metricsImg}
+                alt="Deal term page listing SQL attributes such as Monthly Funnel, SQL and Won by Channel, Won Deals, and Won Deals and Revenue by Won Month."
+                caption="Narrow funnel metrics under the Deal term on the synthetic CRM, each one a single SQL definition."
+              />
+            </Section>
+
+            <Section id="results" title="The results">
+              <P>
+                With the views in place and the two tables hidden, the same funnel question was answered correctly{" "}
+                <B>8 times out of 8</B> (B5), up from 3 of 8 with the defaults.
+              </P>
+              <RunStrips />
+              <P>
+                The fix carried over. On the real data, a set of 17 plain-language questions, the way a marketer would
+                ask them, scored 15 of 17 with the views and a stated win-rate metric, and 17 of 17 once a person-level
+                channel view was added. On the synthetic demo the gain was smaller because the clean schema was already
+                easy: 15 to 16 of 17 for plain wording, and 19 of 20 before and after for questions with the rules
+                spelled out.
+              </P>
+              <QuestionSetsChart />
+              <P>
+                Removing choices also made answers faster. The median answer time fell from 59.5 seconds in B4 to 21
+                seconds in B5.
+              </P>
+              <SpeedChart />
+              <P>
+                And the build itself: once the client was patched and the views were in, every column was described.
+                The lesson from the first build stands, though. Every one of these builds said “success”.
+              </P>
+              <CompileChart />
+              <P>
+                One thing held from the start: asked for ad spend, which the data does not contain, the agent said so
+                instead of inventing a number. Once it returned empty cost columns instead of a clean refusal, which is
+                still not a made-up figure but is easier to misread.
+              </P>
+            </Section>
+
+            <Section id="kumo" title="Side quest: predictions with Kumo Engine">
+              <P>
+                With the definitions in place, the next obvious question is prediction: which leads are likely to
+                become deals? I tried Kumo Engine, which builds prediction models straight from linked database
+                tables, on the synthetic CRM on a local CPU.
+              </P>
+              <KumoChart />
+              <P>
+                Across runs Kumo Engine scored an AUROC of 0.52 to 0.58 for lead scoring. A simple rate per channel, each
+                channel’s historical conversion rate, scored 0.589, and the best possible score on this data was 0.606. All of
+                these sit close together and the intervals overlap.
+              </P>
+              <P>
+                That is not a verdict on Kumo Engine. The synthetic data was generated so that the channel is the only
+                real signal, so there was nothing extra for a model to learn. The useful point is the order of work:{" "}
+                <B>measure a simple baseline first</B>. On small data a per-channel rate is a tough number to beat, and
+                if a model cannot beat it, the cheaper answer wins.
+              </P>
+            </Section>
+
+            <Section id="lessons" title="Lessons for marketing and CRM teams">
               <div className="overflow-x-auto">
-                <table className="viz-table max-w-3xl">
+                <table className="viz-table">
                   <thead>
                     <tr>
-                      <th>Build</th>
-                      <th>Failed model calls</th>
-                      <th>Table links found</th>
-                      <th>Columns described</th>
+                      <th>Lesson</th>
+                      <th>What I saw</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td>Default client</td>
-                      <td>9</td>
-                      <td>1</td>
-                      <td>Most</td>
+                      <td>Remove choices instead of adding words</td>
+                      <td>Descriptions and a bigger model gave 4 to 6 of 8; views plus hidden tables gave 8 of 8</td>
                     </tr>
                     <tr>
-                      <td>Patched client</td>
-                      <td>0</td>
-                      <td>5</td>
-                      <td>125 of 126</td>
+                      <td>Give every ambiguous business word one stated definition</td>
+                      <td>“SQL” and “win rate” were guessed differently until a metric stated them</td>
+                    </tr>
+                    <tr>
+                      <td>Raw columns compete with agreed groupings</td>
+                      <td>
+                        Referral leads came out wrong from the raw source column until a view carried the agreed channel
+                        group
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Check what the tool actually built</td>
+                      <td>The first build said “success” with 9 failed steps</td>
+                    </tr>
+                    <tr>
+                      <td>Measure with repeats and score by value</td>
+                      <td>Single answers looked fine; repeats showed a coin flip before the fix</td>
+                    </tr>
+                    <tr>
+                      <td>Start with a simple baseline, then a model</td>
+                      <td>A per-channel rate matched Kumo Engine on the synthetic data</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-            </Section>
-
-            <Section id="sample" title="The sample data">
               <P>
-                To show the work without client data, I wrote a seeded generator for a fake Pipedrive-style CRM. It
-                copies the quirks that made the real funnel hard to answer, so the same traps show up in the demo.
-              </P>
-              <ul className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-                <Stat value={fmt(sample.persons)} label="Persons (funnel leads)" note={`${sample.months} months`} />
-                <Stat value={fmt(sample.inbox)} label="Inbox “leads” records" note="A second meaning of lead" />
-                <Stat value={fmt(sample.deals)} label="Deals (SQLs)" />
-                <Stat value={fmt(sample.won)} label="Won deals" note={`${sample.wonLaterMonth} won in a later month`} />
-              </ul>
-              <Bullets
-                items={[
-                  <>
-                    <strong className="text-ink">Two meanings of “lead”.</strong> In the funnel a lead is a person. The
-                    CRM also has an inbox table called leads. An agent that picks the wrong table gives a confident,
-                    wrong number.
-                  </>,
-                  <>
-                    <strong className="text-ink">Won is not created.</strong> {sample.wonLaterMonth} of the {sample.won}{" "}
-                    won deals were won in a later month than they were created. Counting them by creation month moves
-                    them to the wrong month, as the chart below shows.
-                  </>,
-                  <>
-                    <strong className="text-ink">A qualification flag that barely separates.</strong>{" "}
-                    {fmt(sample.qualified)} of {fmt(sample.persons)} persons are marked Qualified, so “qualified to SQL” is
-                    almost the same as “lead to SQL”.
-                  </>,
-                  <>
-                    <strong className="text-ink">Messy sources.</strong> Raw lead source holds blanks, “google” and
-                    “google.com”, page URLs and referrers. Reporting is only useful after mapping them to agreed groups.
-                  </>,
-                ]}
-              />
-              <WonDateChart />
-              <P>
-                In November 2025 the sample CRM has 13 won deals. Counted by creation month, the same question
-                returns 0, because those deals were created months earlier. This was the most common error in the
-                tests below.
+                The channel lesson is the one most CRM teams will recognise. Raw lead source holds blanks, “google” and
+                “google.com”, page URLs and referrers. Reporting only becomes useful once each value maps to one agreed
+                group, and the AI only uses that group when it is the easiest thing to reach. Here is what that looks
+                like on the synthetic CRM:
               </P>
               <ChannelChart />
               <div className="overflow-x-auto">
                 <table className="viz-table">
                   <caption className="mb-3 text-left text-sm text-muted">
-                    Raw lead source values in the sample CRM and the agreed group each one maps to.
+                    Raw lead source values in the synthetic CRM and the agreed group each one maps to.
                   </caption>
                   <thead>
                     <tr>
@@ -368,154 +492,35 @@ export default function AutoOntologyArticle() {
                   </tbody>
                 </table>
               </div>
-              <div className="overflow-x-auto">
-                <table className="viz-table">
-                  <caption className="mb-3 text-left text-sm text-muted">
-                    The canonical monthly funnel on the sample CRM, last six months. Won deals are counted by won date.
-                  </caption>
-                  <thead>
-                    <tr>
-                      <th>Month</th>
-                      <th>Leads</th>
-                      <th>Qualified</th>
-                      <th>SQLs</th>
-                      <th>Won</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {funnelTail.map((r) => (
-                      <tr key={r.month}>
-                        <td>{r.month}</td>
-                        <td>{r.leads}</td>
-                        <td>{r.qualified}</td>
-                        <td>{r.sql}</td>
-                        <td>{r.won}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <P>
+                Building the layer also surfaced CRM hygiene issues worth fixing on their own: untagged traffic landing
+                in “direct”, a qualification flag that barely separates leads, and won dates that look recorded late.
+              </P>
             </Section>
 
-            <Section id="tests" title="How I tested it: accuracy, not impressions">
-              <P>
-                A chat demo that answers one question well proves little. So on the pilot data I asked the{" "}
-                <strong className="text-ink">same funnel question 8 times per setup</strong>: for one month, how many
-                leads, qualified leads, SQLs and won deals, and the won revenue. I scored every run by value against
-                the known-correct answer.
-              </P>
-              <P>
-                My first scoring script compared column names and wrongly failed two correct runs. I fixed it to score by
-                value and rescored every batch. The numbers below are the corrected ones.
-              </P>
-              <P>Between batches I changed one thing at a time: how the definitions were written, then the model.</P>
-            </Section>
-
-            <Section id="results" title="Results: from 3 to 6 correct out of 8">
-              <RunStrips />
+            <Section id="limits" title="Limits">
               <Bullets
                 items={[
-                  <>
-                    <strong className="text-ink">Narrow metrics beat long descriptions.</strong> The won-by-creation-month
-                    error disappeared once one metric stated exactly one rule: won deals are counted by won date.
-                  </>,
-                  <>
-                    <strong className="text-ink">A bigger model removed the worst failures</strong> (no answer, and SQL
-                    made only of typed-in numbers) but not the wrong-date error.
-                  </>,
-                  <>
-                    <strong className="text-ink">One big query did not help.</strong> In B2 the agent never used the
-                    canonical funnel query it was given, and the score dropped.
-                  </>,
-                  <>
-                    <strong className="text-ink">It refuses honestly.</strong> Asked for ad spend, which the data does not
-                    contain, it said so instead of inventing a number.
-                  </>,
-                  <>
-                    <strong className="text-ink">Fixes do not stack neatly.</strong> In B4 the old error went away and two
-                    new, different errors appeared.
-                  </>,
+                  "Not production-ready, and not “always right”. The samples are small: 8 runs per batch on one funnel question, and one run per question in the larger sets.",
+                  "Nothing is certified. Certification is the human review step in Auto Ontology, and I did not do it; every term below is still pending approval.",
+                  "Each fix was tuned on the questions I tested. New questions can bring new errors, so funnel answers still need their SQL read.",
+                  "The Kumo Engine test used synthetic data whose only signal is the channel. It says nothing about how Kumo Engine performs on richer data.",
+                  "Sampled values and questions go to NVIDIA’s hosted models. Review that before using real client data.",
+                  "Rates written as ratios of monthly totals can go above 100%. A cohort funnel is the fairer next metric for campaigns.",
                 ]}
               />
-            </Section>
-
-            <Section id="screens" title="What it looks like">
-              <P>Screenshots from a build of the synthetic database only.</P>
               <Shot
                 src={termsImg}
                 alt="Auto Ontology Terms page listing the Deal and Lead terms with counts of column attributes, SQL attributes and related terms."
-                caption="Terms catalog. Deal carries 6 SQL metrics; every term is still marked Pending Approval because no one certified it."
-              />
-              <Shot
-                src={metricsImg}
-                alt="Deal term page listing SQL attributes such as Monthly Funnel, SQL and Won by Channel, Won Deals, and Won Deals and Revenue by Won Month."
-                caption="The funnel metrics under the Deal term, each one a single, narrow SQL definition."
-              />
-              <Shot
-                src={chatImg}
-                alt="Chat answer saying 13 deals were won in November 2025, with the SQL that filters on won_time and a result table."
-                caption="A chat answer with its SQL. It counts by won_time and matches the same query run directly. That was one check, not a repeat test."
-              />
-            </Section>
-
-            <Section id="value" title="What this means for marketing and CRM teams">
-              <div className="overflow-x-auto">
-                <table className="viz-table">
-                  <thead>
-                    <tr>
-                      <th>Need</th>
-                      <th>What the layer adds</th>
-                      <th>What I saw</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>One funnel definition</td>
-                      <td>Leads, qualified leads, SQLs and won deals defined once, in SQL</td>
-                      <td>Matched the reference figures exactly when run directly</td>
-                    </tr>
-                    <tr>
-                      <td>Channel reporting</td>
-                      <td>Always group by the agreed source/medium group, never raw lead source</td>
-                      <td>The agent used the grouping once it existed as a metric</td>
-                    </tr>
-                    <tr>
-                      <td>Self-serve questions</td>
-                      <td>Plain-English questions, answers in seconds with the SQL</td>
-                      <td>Fine for simple questions; funnel questions still need their SQL read</td>
-                    </tr>
-                    <tr>
-                      <td>Honest gaps</td>
-                      <td>Missing data, such as ad spend for CAC or ROAS, is reported, not guessed</td>
-                      <td>Observed</td>
-                    </tr>
-                    <tr>
-                      <td>CRM data quality</td>
-                      <td>Building the layer surfaces issues worth fixing</td>
-                      <td>Untagged traffic in “direct”, a weak qualification flag, won dates that look recorded late</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </Section>
-
-            <Section id="limits" title="Limits and next steps">
-              <Bullets
-                items={[
-                  "Not production-ready. The best result was 6 of 8 on one question, and 8 runs per batch is a small sample.",
-                  "Nothing is certified. Certification is the human review step in Auto Ontology, and I did not do it.",
-                  "Only one funnel question was repeat-tested. More questions need the same treatment.",
-                  "Sampled values and questions go to NVIDIA’s hosted models. Review that before using real client data.",
-                  "Rates written as ratios of monthly totals can go above 100%. A cohort funnel is the fairer next metric.",
-                  "Predictions (the optional Kumo integration) were not tested.",
-                ]}
+                caption="Terms catalog on the synthetic CRM. Every term is still marked Pending Approval because no one certified it."
               />
             </Section>
 
             <Section id="reproduce" title="Reproduce it on synthetic data">
               <P>
-                The repository has the synthetic CRM generator, the funnel SQL, a script that checks the totals add up,
-                and the patch. It needs Docker, uv and an NVIDIA API key for the Auto Ontology step.
+                The repository has the synthetic CRM generator, the funnel SQL and views, a script that checks the
+                totals add up, the patch and the anonymized test log. It needs Docker, uv and an NVIDIA API key for the
+                Auto Ontology step.
               </P>
               <div className="flex flex-wrap gap-3">
                 <a
@@ -534,7 +539,7 @@ export default function AutoOntologyArticle() {
                 ) : null}
               </div>
               <p className="max-w-3xl text-sm leading-relaxed text-muted">
-                Built on NVIDIA Auto Ontology (Apache-2.0). Not affiliated with or endorsed by NVIDIA.
+                Built on NVIDIA Auto Ontology (Apache-2.0). Not affiliated with or endorsed by NVIDIA or Kumo.
               </p>
             </Section>
           </div>

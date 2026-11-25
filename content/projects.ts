@@ -581,10 +581,10 @@ export const caseStudies: CaseStudy[] = [
     links: [{ label: "Source code on GitHub", href: "https://github.com/nabiledler92/auto-ontology-marketing-showcase" }],
     metaTitle: "Auto Ontology for Marketing and CRM | Nabil Takiyuddin",
     metaDescription:
-      "Tested an AI ontology layer on CRM funnel data: agreed metrics written as SQL, the same question asked 8 times per setup. Correct answers rose from 3 to 6 of 8.",
+      "Tested an AI ontology layer on CRM funnel data: the same question asked 8 times per setup went from 3 to 8 correct once the rules moved into database views.",
     summary:
-      "A pilot that tests whether shared, governed funnel definitions let marketers ask CRM questions in plain English and get auditable answers. Correct answers rose from 3 to 6 of 8 as the metrics got narrower and the model got larger.",
-    highlight: { value: "3 to 6 of 8", label: "correct funnel answers across four test batches" },
+      "A pilot that tests whether shared, governed funnel definitions let marketers ask CRM questions in plain English and get auditable answers. Longer descriptions and a bigger model helped partly; building the rules into database views took the same question from 3 to 8 correct out of 8.",
+    highlight: { value: "3 to 8 of 8", label: "correct funnel answers across five test batches" },
     problem: [
       "Marketing funnel numbers often live in pivot sheets, where the word \"leads\" means different things in different tabs, raw lead sources are messy, and nobody can say which version is right.",
       "The question was whether an ontology layer, a shared set of business definitions on top of the CRM data, could give consistent answers to plain-English questions and show the SQL behind each one. The pilot used a CRM export from an anonymous B2B services company that had no data warehouse yet.",
@@ -611,22 +611,29 @@ export const caseStudies: CaseStudy[] = [
         text: "The first compile reported success while 9 model calls had failed. Seven hosted models were tested; the five that responded all rejected the same request field. A small local patch fixed it, and the recompile had no failed calls.",
       },
       {
+        title: "Remove choices from the AI",
+        text: "Moved the agreed rules into database views (won deals with their won month, deals with the agreed channel group, the monthly funnel) and hid two tables that confused the agent, so the right column was the only one on offer.",
+      },
+      {
         title: "Rebuild the demo on synthetic data",
         text: "Wrote a seeded generator for a fake Pipedrive-style CRM with the same quirks (messy sources, deals won months after creation, two meanings of \"lead\") and recompiled it, so the work can be shown with no client data.",
       },
     ],
     results: {
       metrics: [
-        { value: "6 of 8", label: "Best batch", note: "Larger model plus a narrow won-by-month metric" },
-        { value: "3, 2, 4, 6", label: "Correct per batch of 8", note: "Four setups, same question" },
-        { value: "10", label: "Funnel metrics as SQL" },
-        { value: "9 to 0", label: "Failed model calls", note: "Before and after the patch" },
+        { value: "8 of 8", label: "Best batch", note: "Rules built into views, 2 confusing tables hidden" },
+        { value: "3, 2, 4, 6, 8", label: "Correct per batch of 8", note: "Five setups, same question" },
+        { value: "17 of 17", label: "Plain-language set", note: "Real data, one run per question" },
+        { value: "59.5 s to 21 s", label: "Median answer time", note: "B4 to B5, 8 runs each" },
       ],
       notes: [
-        "Narrow, single-purpose metrics steered the answering agent better than long descriptions or one large query. The creation-month error for won deals disappeared once one metric stated the won-date rule.",
-        "A larger model removed the worst failures (no answer, and SQL made only of typed-in numbers) but not the wrong-date error.",
+        "Removing choices worked better than adding words. Descriptions and a bigger model gave 4 to 6 of 8; views that build the rules in, plus hiding two confusing tables, gave 8 of 8.",
+        "Narrow, single-purpose metrics steered the agent better than long descriptions or one large query, which it ignored. A larger model removed the worst failures (no answer, and SQL made only of typed-in numbers) but still guessed the rules.",
+        "The fix carried over: a set of 17 plain-language questions on the real data went from 15 to 17 correct once a person-level channel view was added.",
+        "The first build reported success while 9 model calls had failed. A patch of about six lines fixed it; after the rebuild every column was described.",
         "Asked for ad spend, which the data does not contain, the agent said so instead of inventing a number.",
-        "Not production-ready: 8 runs per batch is a small sample, nothing is certified by a human reviewer yet, and new errors appeared as old ones were fixed. Funnel answers still need their SQL read.",
+        "A side test of Kumo Engine for lead scoring, on synthetic data, did not beat a simple per-channel rate. The data's only signal was the channel, so this says more about baselines than about Kumo Engine.",
+        "Not production-ready: 8 runs per batch and one run per question in the larger sets are small samples, and nothing is certified by a human reviewer yet. Funnel answers still need their SQL read.",
         "Building the layer exposed CRM data-quality issues worth fixing: untagged traffic landing in \"direct\", a qualification flag that barely separates leads, and won dates that look recorded late.",
       ],
     },

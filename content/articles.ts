@@ -27,13 +27,13 @@ export type Article = {
 export const articles: Article[] = [
   {
     slug: "auto-ontology-marketing-crm",
-    title: "Can an AI Ontology Layer Answer Marketing Funnel Questions? A Use Case on CRM Data",
+    title: "Can an AI Ontology Layer Answer Marketing Funnel Questions? From 3 to 8 Correct out of 8 on CRM Data",
     shortTitle: "Auto Ontology use case: marketing funnel on CRM data",
     metaTitle: "Use Case: AI Ontology for CRM Funnels | Nabil Takiyuddin",
     metaDescription:
-      "A use case of NVIDIA Auto Ontology on CRM funnel data: sample data, governed SQL metrics, and charts of 32 test runs where correct answers rose to 6 of 8.",
+      "NVIDIA Auto Ontology on CRM funnel data: the same question, asked 8 times per setup, went from 3 to 8 correct once the rules moved into database views.",
     summary:
-      "How I tested NVIDIA Auto Ontology as a governed funnel layer on CRM data: the sample data, the metrics I wrote, how I scored the AI's answers over 32 runs, and what that means for marketing and CRM teams.",
+      "I tested whether NVIDIA Auto Ontology could answer marketing funnel questions on a real CRM export, correctly and every time. Longer descriptions and a bigger model only helped partly; removing choices from the AI took the same question from 3 of 8 to 8 of 8 correct. Plus a side test of Kumo Engine for lead scoring.",
     date: "November 2026",
     published: "2026-11-25",
     updated: "2026-11-25",
@@ -46,6 +46,8 @@ export const articles: Article[] = [
       "CRM analytics",
       "text-to-SQL",
       "LLM evaluation",
+      "Kumo Engine",
+      "lead scoring",
       "use case",
     ],
   },
