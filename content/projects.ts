@@ -654,6 +654,85 @@ export const caseStudies: CaseStudy[] = [
       "NVIDIA Auto Ontology",
     ],
   },
+  {
+    slug: "mmm-benchmark-meridian-pymc",
+    code: "CS-09",
+    updated: "2026-11-28",
+    title: "Can You Trust a Marketing Mix Model? Benchmarking Meridian and PyMC-Marketing",
+    shortTitle: "MMM benchmark: Meridian vs PyMC-Marketing",
+    schemaType: "CreativeWork",
+    course: { code: "Independent project", name: "Marketing measurement" },
+    format: "Individual",
+    formatLabel: "Independent study",
+    date: "November 2026",
+    context: { label: "Setting", value: "Simulated data with known ROIs, plus a real campaign's spend schedule" },
+    metaTitle: "MMM Benchmark: Meridian vs PyMC-Marketing | Nabil Takiyuddin",
+    metaDescription:
+      "Simulation benchmark of Google Meridian and PyMC-Marketing with known ROIs: a tie out of the box, prior bias at low ROI, and 7–9% error with lift tests.",
+    summary:
+      "A simulation benchmark with known ROIs to compare Google Meridian and PyMC-Marketing fairly, then a feasibility study on a real music-video campaign's spend schedule. The tools tied once given the same lift tests and curve shape; campaign design decided what could be measured.",
+    highlight: { value: "6.6% vs 7.0%", label: "ROI error with the same lift tests and curves" },
+    problem: [
+      "A marketing mix model estimates each channel's ROI, and budgets move on those numbers. But on real data the answer can never be checked, because nobody sees what sales would have been without a channel.",
+      "Choosing between two MMM tools, and trusting their ROIs, needs a test where the truth is known. A real music-video campaign across five Southeast Asian markets then raised a second question: could it have been measured at all?",
+    ],
+    approach: [
+      {
+        title: "Build a simulator with known ROIs",
+        text: "156 weeks of national data for YouTube, TikTok and Meta, with bursty, correlated spend, carryover, diminishing returns and noise. The true ROI of every channel is set on purpose.",
+      },
+      {
+        title: "Fit both tools on the same table",
+        text: "Google Meridian and PyMC-Marketing got the same spend, controls and 143-week training split, each with its out-of-the-box priors. Every scenario ran on 5 seeds.",
+      },
+      {
+        title: "Four scenarios, one change at a time",
+        text: "ROIs near Meridian's default prior; ROIs far from it (a channel at 0.4); the same noisy lift tests for both tools; then PyMC-Marketing on the same Hill curves as the data.",
+      },
+      {
+        title: "Score against the truth, not the fit",
+        text: "ROI error, whether the 90% interval held the truth, whether a money-losing channel was called below break-even, held-out revenue error, R-hat and fit time.",
+      },
+      {
+        title: "Test a real campaign's measurability",
+        text: "The real campaign had no streams data and YouTube launched on release day. I simulated streams on top of the real spend schedule to see which channels any MMM could have read, by market and nationally.",
+      },
+      {
+        title: "Write the measurement playbook",
+        text: "Collect streams by market, stagger channel starts, hold one market out per flight, vary spend on purpose, and check the planned flighting with the simulation before launch.",
+      },
+    ],
+    results: {
+      metrics: [
+        { value: "10.2% vs 10.4%", label: "Out-of-the-box ROI error", note: "Meridian vs PyMC-Marketing, a tie" },
+        { value: "0.58", label: "Estimate for a true ROI of 0.4", note: "Meridian's default prior; 0.40 with lift tests" },
+        { value: "6.6% / 7.0%", label: "Error with lift tests and Hill curves", note: "Lift tests alone: 12.2%" },
+        { value: "~5x", label: "Meridian's speed advantage", note: "About 14–17 s vs 60–90 s per fit on CPU" },
+      ],
+      notes: [
+        "Fit doesn't prove ROI: both tools predicted held-out revenue within about 2.5%, yet their ROIs for the same channel differed by up to 25%.",
+        "Priors bite when the truth is unusual. With a true ROI of 0.4, Meridian's default prior pulled the estimate up to 0.58, and its range crossed break-even in 4 of 5 runs.",
+        "The same noisy lift tests (about 20% error) took Meridian from 19.6% to 6.6% error and PyMC-Marketing from 14.3% to 8.7%. Both beat the lift tests alone (12.2%).",
+        "Model choices matter more than the tool: switching PyMC-Marketing from logistic to Hill curves took it from 8.7% to 7.0%, a tie with Meridian.",
+        "On the real campaign's flighting, market-level data made TikTok readable within 12% even at a small effect. YouTube, which started on release day, was overstated by 390% to 3,120% by national models.",
+        "Every campaign was bought for views and no streams were collected, so impact could not be measured after the fact. The lesson: buy what you want to measure.",
+        "Limits: national data only in the benchmark, 5 seeds per scenario, and the simulator uses Meridian's default curve. The feasibility effects are assumptions; the ranking of channels should hold, the exact numbers would not.",
+      ],
+    },
+    tools: ["Python 3.11", "Google Meridian 2.2", "JAX", "PyMC-Marketing 0.19", "NumPyro", "pandas", "uv"],
+    role: "Independent study: designed the benchmark and the simulator, ran and diagnosed the models, and wrote the measurement playbook.",
+    tags: ["Statistics", "ML"],
+    keywords: [
+      "marketing mix modeling",
+      "MMM",
+      "Google Meridian",
+      "PyMC-Marketing",
+      "Bayesian inference",
+      "ROI",
+      "lift test",
+      "media measurement",
+    ],
+  },
 ];
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {

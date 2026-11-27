@@ -52,6 +52,33 @@ export const articles: Article[] = [
       "use case",
     ],
   },
+  {
+    slug: "mmm-benchmark-meridian-pymc",
+    title: "Can You Trust a Marketing Mix Model? Benchmarking Google Meridian and PyMC-Marketing on Known ROIs",
+    shortTitle: "MMM benchmark: Meridian vs PyMC-Marketing",
+    metaTitle: "Meridian vs PyMC-Marketing MMM Benchmark | Nabil Takiyuddin",
+    metaDescription:
+      "Meridian vs PyMC-Marketing on simulated data with known ROIs: a tie out of the box, prior bias at low ROI, 7–9% error with lift tests, and a real campaign test.",
+    summary:
+      "I benchmarked Google Meridian against PyMC-Marketing on simulated data where the true ROIs were known. Out of the box they tied; a low-ROI channel exposed Meridian's default prior; the same lift tests cut both to 7–9% error. Then a real music-video campaign turned out to be unmeasurable by design, which became a measurement playbook.",
+    date: "November 2026",
+    published: "2026-11-28",
+    updated: "2026-11-28",
+    caseStudy: "mmm-benchmark-meridian-pymc",
+    keywords: [
+      "marketing mix modeling",
+      "MMM",
+      "Google Meridian",
+      "PyMC-Marketing",
+      "Bayesian MMM",
+      "ROI",
+      "lift test",
+      "incrementality",
+      "media measurement",
+      "simulation benchmark",
+      "music marketing",
+    ],
+  },
 ];
 
 export function getArticle(slug: string): Article | undefined {
