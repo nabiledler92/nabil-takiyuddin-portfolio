@@ -42,7 +42,7 @@ const toc = [
   { id: "real", label: "A real campaign" },
   { id: "feasibility", label: "What was readable" },
   { id: "playbook", label: "The playbook" },
-  { id: "decisions", label: "Decisions" },
+  { id: "decisions", label: "Business decisions" },
   { id: "limits", label: "Limits" },
 ];
 
@@ -453,47 +453,176 @@ export default function MmmBenchmarkArticle() {
               </P>
             </Section>
 
-            <Section id="decisions" title="What it means for budget decisions">
+            <Section id="decisions" title="What it means for business and decision making">
+              <P>
+                An MMM is not a reporting tool; it is a budgeting tool. Its ROIs decide which channel gets more money next
+                quarter and which one gets cut. So the useful question is not “which tool is more accurate?” but{" "}
+                <B>“which decision would I have made, and would it have been right?”</B>
+              </P>
+
+              <h3 className="font-display text-xl font-semibold tracking-tight text-ink">
+                A worked example: the channel that loses money
+              </h3>
+              <P>
+                Take the benchmark’s YouTube channel with a true ROI of 0.4. For every 100 spent, it brings back 40: a loss
+                of 60. The right decision is to cut it or move the budget. Here is what each setup would have told the
+                marketing team, and what they would most likely have done:
+              </P>
               <div className="overflow-x-auto">
                 <table className="viz-table">
                   <thead>
                     <tr>
-                      <th>Lesson</th>
-                      <th>What I saw</th>
+                      <th>Setup</th>
+                      <th>Return per 100 spent</th>
+                      <th>Range below break-even?</th>
+                      <th>Likely decision</th>
+                      <th>Right call?</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td>Fit doesn’t prove ROI</td>
-                      <td>Both tools within 2.5% on held-out revenue; ROIs for one channel up to 25% apart</td>
+                      <td>Truth</td>
+                      <td>40</td>
+                      <td>n/a</td>
+                      <td>Cut or move the budget</td>
+                      <td>n/a</td>
                     </tr>
                     <tr>
-                      <td>Priors bite when the truth is unusual</td>
-                      <td>True ROI 0.4 estimated at 0.58; the range crossed break-even in 4 of 5 runs</td>
+                      <td>Meridian, default prior</td>
+                      <td>58</td>
+                      <td>1 of 5 runs</td>
+                      <td>“Not sure it loses money”: budget usually stays, or another quarter of spend goes in to find out</td>
+                      <td>Delayed; the loss continues</td>
                     </tr>
                     <tr>
-                      <td>Experiments fix it</td>
-                      <td>Same lift tests: Meridian 19.6% to 6.6%, PyMC-Marketing 14.3% to 8.7%, tests alone 12.2%</td>
+                      <td>PyMC-Marketing, default</td>
+                      <td>25</td>
+                      <td>5 of 5 runs</td>
+                      <td>Cut</td>
+                      <td>Yes, though it makes the channel look worse than it is</td>
                     </tr>
                     <tr>
-                      <td>Model choices matter more than the tool</td>
-                      <td>Matching the curve shape: 8.7% to 7.0%, a tie with Meridian’s 6.6%</td>
-                    </tr>
-                    <tr>
-                      <td>Campaign design decides measurability</td>
-                      <td>On the real flighting, TikTok within 12% by market; YouTube overstated up to 32 times</td>
-                    </tr>
-                    <tr>
-                      <td>Buy what you want to measure</td>
-                      <td>Every buy optimised for views and no streams were collected</td>
+                      <td>Either tool, with lift tests</td>
+                      <td>32 to 40</td>
+                      <td>5 of 5 runs</td>
+                      <td>Cut, with evidence to defend it</td>
+                      <td>Yes, confidently</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <P>
+                The point estimates all said “below break-even”. What changed the decision was the <B>range</B>. A range
+                that crosses break-even means the model can’t tell a loss from a gain, and most teams don’t cut a channel
+                on “can’t tell”. That is how a money-losing channel survives several budget cycles. Splits between healthy
+                channels are exposed too: two tools that fit the data equally well gave one channel ROIs 25% apart, enough to move
+                a budget split between channels, and nothing in the fit warned about it.
+              </P>
+
+              <h3 className="font-display text-xl font-semibold tracking-tight text-ink">The decisions, one by one</h3>
+              <div className="overflow-x-auto">
+                <table className="viz-table">
+                  <thead>
+                    <tr>
+                      <th>Business question</th>
+                      <th>What the study says</th>
+                      <th>What to do</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Which MMM tool should we adopt?</td>
+                      <td>
+                        With the same information and the same curve shape, they tied (6.6% vs 7.0%). Meridian fitted
+                        about 5x faster.
+                      </td>
+                      <td>
+                        Choose on speed, data shape (Meridian is built for market-level data) and your team’s skills.
+                        Don’t expect a tool switch to fix accuracy.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Can we trust the ROI in the deck?</td>
+                      <td>A good fit (within 2.5%) said nothing about whether the ROIs were right.</td>
+                      <td>
+                        Ask for the range, not just the number, and for the convergence check (R-hat). One fit in five
+                        failed silently.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Should we cut or scale a channel?</td>
+                      <td>Point estimates agreed; ranges decided whether a call could be made.</td>
+                      <td>
+                        Act only where the range clears break-even. Where it doesn’t, run a test before moving money.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Is a lift test worth its cost?</td>
+                      <td>
+                        Even noisy tests cut error by about two thirds (19.6% to 6.6%) and turned “unclear” into a
+                        confident call in every run.
+                      </td>
+                      <td>
+                        Weigh one market held dark for 2–3 weeks against misallocating the budget every flight after it.
+                        Rotate the tested channel each flight.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Is a channel unusual for our business?</td>
+                      <td>Default priors held up near typical ROIs and failed on a low one.</td>
+                      <td>
+                        For channels you suspect are weak (or very strong), calibrate with a test before trusting the
+                        default settings.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>How do we plan the next launch?</td>
+                      <td>
+                        The campaign’s flighting, not the tool, decided what could be measured. YouTube’s value was
+                        unknowable the day it launched with the release.
+                      </td>
+                      <td>
+                        Collect the outcome by market, stagger channel starts and hold one market out. Check the plan
+                        with a simulation before spending.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3 className="font-display text-xl font-semibold tracking-tight text-ink">
+                What the music-video team could have decided
+              </h3>
+              <P>
+                Had streams been collected, the real campaign would have supported some decisions and not others:
+              </P>
+              <Bullets
+                items={[
+                  <>
+                    <B>TikTok: scale or cut with evidence.</B> Its long, varied spend history made it readable within 12%
+                    by market, so its budget could be defended either way.
+                  </>,
+                  <>
+                    <B>Meta: test before adding money.</B> Estimates were near the truth but too uncertain to justify a
+                    budget change. A holdout market would settle it.
+                  </>,
+                  <>
+                    <B>YouTube: no decision possible.</B> Launching on release day tied its spend to the organic surge.
+                    National models would have credited it with up to about 30 times its real effect, the kind of
+                    number that wins a bigger budget next time for the wrong reason.
+                  </>,
+                ]}
+              />
+              <P>
+                The bigger business point is upstream of any model. Every buy was optimised for views and no streams
+                were recorded, so the one question the label cared about, <B>did the ads drive listening?</B>, could not
+                be answered at any price after the fact. Deciding what success means, and collecting it, is a planning
+                decision, not an analytics one.
+              </P>
+              <P>
                 The practical version for a marketing team: choose the tool for speed, data shape and how your team
-                works, then spend the effort on <B>experiments and campaign design</B>. That is where the accuracy
-                came from in every scenario here.
+                works, then spend the effort on <B>experiments and campaign design</B>. That is where the accuracy, and
+                the confidence to move budget, came from in every scenario here.
               </P>
             </Section>
 

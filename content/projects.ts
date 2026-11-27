@@ -716,6 +716,7 @@ export const caseStudies: CaseStudy[] = [
         "Model choices matter more than the tool: switching PyMC-Marketing from logistic to Hill curves took it from 8.7% to 7.0%, a tie with Meridian.",
         "On the real campaign's flighting, market-level data made TikTok readable within 12% even at a small effect. YouTube, which started on release day, was overstated by 390% to 3,120% by national models.",
         "Every campaign was bought for views and no streams were collected, so impact could not be measured after the fact. The lesson: buy what you want to measure.",
+        "For budget decisions, the range mattered more than the point estimate: with default priors a money-losing channel's range crossed break-even, which usually means the budget stays. With lift tests, every run supported cutting it.",
         "Limits: national data only in the benchmark, 5 seeds per scenario, and the simulator uses Meridian's default curve. The feasibility effects are assumptions; the ranking of channels should hold, the exact numbers would not.",
       ],
     },
