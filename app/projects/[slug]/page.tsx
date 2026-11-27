@@ -17,6 +17,7 @@ type Props = { params: Promise<{ slug: string }> };
 function linkType(href: string) {
   if (href.includes("github.com")) return "source_code";
   if (href.includes("streamlit.app")) return "streamlit";
+  if (href.includes("kumo.nabil-takiyuddin.dev")) return "mockup";
   return "live_app";
 }
 

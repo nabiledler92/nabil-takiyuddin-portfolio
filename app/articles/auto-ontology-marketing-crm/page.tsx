@@ -419,6 +419,20 @@ export default function AutoOntologyArticle() {
                 <B>measure a simple baseline first</B>. On small data a per-channel rate is a tough number to beat, and
                 if a model cannot beat it, the cheaper answer wins.
               </P>
+              <P>
+                To show how this could look inside the chat, I mocked up three screens: the answer with its trust note,
+                the first-time training step, and the setting that keeps data on the machine. See the{" "}
+                <a
+                  href="https://kumo.nabil-takiyuddin.dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan underline decoration-line-strong underline-offset-4 hover:decoration-cyan"
+                  {...trackAttrs("case_study_link_click", { case_study: SLUG, link_type: "mockup" })}
+                >
+                  Kumo Engine mockup
+                </a>{" "}
+                (synthetic data, static screens).
+              </P>
             </Section>
 
             <Section id="decisions" title="What it means for business decisions">
