@@ -569,7 +569,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "auto-ontology-marketing-crm",
     code: "CS-08",
-    updated: "2026-11-25",
+    updated: "2026-11-27",
     title: "Governed Marketing Funnel Metrics on CRM Data with NVIDIA Auto Ontology, Tested for Answer Accuracy",
     shortTitle: "Auto Ontology for marketing and CRM",
     schemaType: "CreativeWork",
@@ -578,7 +578,10 @@ export const caseStudies: CaseStudy[] = [
     formatLabel: "Independent pilot",
     date: "November 2026",
     context: { label: "Setting", value: "Pilot on an anonymized CRM export, repeated on synthetic data" },
-    links: [{ label: "Source code on GitHub", href: "https://github.com/nabiledler92/auto-ontology-marketing-showcase" }],
+    links: [
+      { label: "Source code on GitHub", href: "https://github.com/nabiledler92/auto-ontology-marketing-showcase" },
+      { label: "Kumo Engine mockup", href: "https://kumo.nabil-takiyuddin.dev" },
+    ],
     metaTitle: "Auto Ontology for Marketing and CRM | Nabil Takiyuddin",
     metaDescription:
       "Tested an AI ontology layer on CRM funnel data: the same question asked 8 times per setup went from 3 to 8 correct once the rules moved into database views.",

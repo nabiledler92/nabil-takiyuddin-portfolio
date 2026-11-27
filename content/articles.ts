@@ -36,7 +36,7 @@ export const articles: Article[] = [
       "I tested whether NVIDIA Auto Ontology could answer marketing funnel questions on a real CRM export, correctly and every time. Longer descriptions and a bigger model only helped partly; removing choices from the AI took the same question from 3 of 8 to 8 of 8 correct. Plus a side test of Kumo Engine for lead scoring.",
     date: "November 2026",
     published: "2026-11-25",
-    updated: "2026-11-25",
+    updated: "2026-11-27",
     caseStudy: "auto-ontology-marketing-crm",
     keywords: [
       "NVIDIA Auto Ontology",
